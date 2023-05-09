@@ -1,0 +1,13 @@
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/dto/request/CreateProductRequest.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/dto/request/DeleteProductRequest.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/dto/request/UpdateProductRequest.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/dao/ProductDao.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/dto/Response.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/service/ProductService.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/entity/ProductEntity.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/ProductServiceApplication.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/service/impl/ProductServiceImpl.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/controller/ProductController.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/handler/BadRequestExceptionHandler.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/repositories/ProductRepository.java
+/Users/ingwerludwig/DATA/PROGRAMMING/JAVA/Microservices/ProductService/src/main/java/com/javagrind/productservice/dto/request/FindProductRequest.java
