@@ -6,7 +6,7 @@ import com.javagrind.productservice.dto.request.DeleteProductRequest;
 import com.javagrind.productservice.dto.request.FindProductRequest;
 import com.javagrind.productservice.dto.request.UpdateProductRequest;
 import com.javagrind.productservice.entity.ProductEntity;
-import com.javagrind.productservice.handler.BadRequestExceptionHandler;
+import com.javagrind.productservice.handler.GlobalExceptionHandler;
 import com.javagrind.productservice.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -28,102 +28,31 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response<ProductEntity>> createProduct (@Valid @RequestBody CreateProductRequest request, BindingResult errors){
-        Response<ProductEntity> response;
-
-        if (errors.hasErrors()) BadRequestExceptionHandler.handle(errors);
-
-        try {
-            ProductEntity newProduct = productService.create(request);
-            response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Create product successfully", newProduct);
-            return ResponseEntity.ok().body(response);
-        } catch (HttpClientErrorException.Unauthorized ex) {
-            response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        } catch (HttpClientErrorException.Forbidden ex) {
-            response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-        } catch (Exception ex) {
-            response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+    public ResponseEntity<Response<Object>> createProduct (@Valid @RequestBody CreateProductRequest request, BindingResult errors){
+        ProductEntity newProduct = productService.create(request);
+        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Create product successfully", newProduct);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/getProduct")
     public ResponseEntity<Response<Object>> findProduct (@Valid @RequestBody FindProductRequest request, BindingResult errors){
-        Response<Object> response;
-
-        if (errors.hasErrors()) {return BadRequestExceptionHandler.handle(errors);
-        } else {
-
-            try {
-                Object result = productService.findProduct(request);
-                response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find product successfully", result);
-                return ResponseEntity.ok().body(response);
-            } catch (HttpClientErrorException.Unauthorized ex) {
-                response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-            } catch (HttpClientErrorException.Forbidden ex) {
-                response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-            } catch (Exception ex) {
-                response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-            }
-        }
+        Object result = productService.findProduct(request);
+        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find product successfully", result);
+        return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Response<ProductEntity>> updateProduct(@RequestParam String id, @RequestBody UpdateProductRequest request, BindingResult errors){
-        Response<ProductEntity> response;
-
-        if (errors.hasErrors()) BadRequestExceptionHandler.handle(errors);
-
-        try {
-            ProductEntity updatedProduct = productService.update(id, request);
-            response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update product successfully", updatedProduct);
-            return ResponseEntity.ok().body(response);
-        } catch (HttpClientErrorException.Unauthorized ex) {
-            response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        } catch (HttpClientErrorException.Forbidden ex) {
-            response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-        } catch (Exception ex) {
-            response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+    public ResponseEntity<Response<Object>> updateProduct(@RequestParam String id, @RequestBody UpdateProductRequest request, BindingResult errors){
+        ProductEntity updatedProduct = productService.update(id, request);
+        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update product successfully", updatedProduct);
+        return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/delete")
-    public ResponseEntity<Response<String>> deleteProduct(@Valid @RequestBody DeleteProductRequest request, Errors errors){
-        Response<String> response;
-
-        if (errors.hasErrors()) BadRequestExceptionHandler.handle(errors);
-
-        try {
-            String result = productService.delete(request);
-            response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Delete product successfully", result);
-            return ResponseEntity.ok().body(response);
-        } catch (HttpClientErrorException.Unauthorized ex) {
-            response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        } catch (HttpClientErrorException.Forbidden ex) {
-            response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-        } catch (Exception ex) {
-            response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+    public ResponseEntity<Response<Object>> deleteProduct(@Valid @RequestBody DeleteProductRequest request, Errors errors){
+        String result = productService.delete(request);
+        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Delete product successfully", result);
+        return ResponseEntity.ok().body(response);
     }
 
 }

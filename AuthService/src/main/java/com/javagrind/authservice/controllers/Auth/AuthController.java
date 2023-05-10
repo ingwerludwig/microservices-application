@@ -5,7 +5,7 @@ import com.javagrind.authservice.dto.request.Auth.LoginRequest;
 import com.javagrind.authservice.dto.request.Auth.LogoutRequest;
 import com.javagrind.authservice.dto.request.User.RegisterRequest;
 import com.javagrind.authservice.entity.UserEntity;
-import com.javagrind.authservice.handler.BadRequestExceptionHandler;
+import com.javagrind.authservice.handler.GlobalExceptionHandler;
 import com.javagrind.authservice.services.AuthService;
 import com.javagrind.authservice.services.UserService;
 import jakarta.validation.Valid;
@@ -26,75 +26,22 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<Response<Object>> authenticateUser(@Valid @RequestBody LoginRequest request, BindingResult errors) {
-        Response<Object> response;
-
-        if (errors.hasErrors()) {return BadRequestExceptionHandler.handle(errors);
-        } else {
-
-            try {
-                Object result = authService.login(request);
-                response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Token created successfully", result);
-                return ResponseEntity.ok().body(response);
-            } catch (HttpClientErrorException.Unauthorized ex) {
-                response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-            } catch (HttpClientErrorException.Forbidden ex) {
-                response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-            } catch (Exception ex) {
-                response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-            }
-        }
+        Object result = authService.login(request);
+        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Token created successfully", result);
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<Response<Object>> registerUser(@Valid @RequestBody RegisterRequest request, BindingResult errors){
-        Response<Object> response;
-
-        if (errors.hasErrors()) {return BadRequestExceptionHandler.handle(errors);
-        } else {
-
-            try {
-                UserEntity result = userService.create(request);
-                response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "User registered successfully", result);
-                return ResponseEntity.ok().body(response);
-            } catch (HttpClientErrorException.Unauthorized ex) {
-                response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-            } catch (HttpClientErrorException.Forbidden ex) {
-                response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-            } catch (Exception ex) {
-                response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-            }
-        }
+        UserEntity result = userService.create(request);
+        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "User registered successfully", result);
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/signout")
     public ResponseEntity<Response<Object>> logoutUser(@Valid @RequestBody LogoutRequest request, BindingResult errors){
-        Response<Object> response;
-
-        if (errors.hasErrors()) {return BadRequestExceptionHandler.handle(errors);
-        } else {
-
-            try {
-                Object result = authService.logout(request);
-                response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Logout success", result);
-                return ResponseEntity.ok().body(response);
-            } catch (HttpClientErrorException.Unauthorized ex) {
-                response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-            } catch (HttpClientErrorException.Forbidden ex) {
-                response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-            } catch (Exception ex) {
-                response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-            }
-        }
+        Object result = authService.logout(request);
+        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Logout success", result);
+        return ResponseEntity.ok().body(response);
     }
-
-
 }

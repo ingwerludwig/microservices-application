@@ -4,7 +4,7 @@ import com.javagrind.authservice.dto.Response;
 import com.javagrind.authservice.dto.request.User.DeleteRequest;
 import com.javagrind.authservice.dto.request.User.UpdateUserRequest;
 import com.javagrind.authservice.entity.UserEntity;
-import com.javagrind.authservice.handler.BadRequestExceptionHandler;
+import com.javagrind.authservice.handler.GlobalExceptionHandler;
 import com.javagrind.authservice.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,52 +26,16 @@ public class UserController {
 
     @PutMapping("/delete")
     public ResponseEntity<Response<UserEntity>> deleteUser(@Valid @RequestBody DeleteRequest request, Errors errors){
-        Response<UserEntity> response;
-
-        if (errors.hasErrors()) BadRequestExceptionHandler.handle(errors);
-
-        try {
-            String result = userService.delete(request);
-            response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Delete "+ result + " successfully", null);
-            return ResponseEntity.ok().body(response);
-        } catch (HttpClientErrorException.Unauthorized ex) {
-            response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        } catch (HttpClientErrorException.Forbidden ex) {
-            response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-        } catch (Exception ex) {
-            response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+        String result = userService.delete(request);
+        Response<UserEntity> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Delete "+ result + " successfully", null);
+        return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Response<UserEntity>> updateUser(@RequestParam String id, @RequestBody UpdateUserRequest request, Errors errors){
-        Response<UserEntity> response;
-
-        if (errors.hasErrors()) BadRequestExceptionHandler.handle(errors);
-
-        try {
-            UserEntity result = userService.update(id,request);
-            response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "User updated successfully", result);
-            return ResponseEntity.ok().body(response);
-        } catch (HttpClientErrorException.Unauthorized ex) {
-            response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        } catch (HttpClientErrorException.Forbidden ex) {
-            response = new Response<>(HttpStatus.FORBIDDEN.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-        } catch (Exception ex) {
-            response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
-            System.err.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+        UserEntity result = userService.update(id,request);
+        Response<UserEntity> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "User updated successfully", result);
+        return ResponseEntity.ok().body(response);
     }
 
 }

@@ -50,16 +50,14 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
-
     @Override
     public UserEntity findByEmail(String requestedEmail) {
         UserEntity requestedUser = userRepository.findUserByEmail(requestedEmail);
-
         try {
             return requestedUser;
         }catch(Exception e){
             System.err.println(e);
-            return null;
+            throw new NoSuchElementException("User not found");
         }
     }
 
@@ -86,5 +84,4 @@ public class UserServiceImpl implements UserService {
         if(result > 0)  return deletedUser.getEmail();
         else throw new NoSuchElementException("User not found");
     }
-
 }
