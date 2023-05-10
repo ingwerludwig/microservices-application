@@ -3,19 +3,22 @@ package com.javagrind.authservice.handler;
 import com.javagrind.authservice.dto.Response;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
     static Response<Object> response;
     public GlobalExceptionHandler() {
@@ -36,15 +39,39 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
-    @ExceptionHandler(ExpiredJwtException.class)
-    public static ResponseEntity<Response<Object>> handleJWTExpired(IllegalArgumentException ex) {
+    @ExceptionHandler(JwtException.class)
+    public static ResponseEntity<Response<Object>> handleJWTException(JwtException ex) {
         response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
-    @ExceptionHandler(JwtException.class)
-    public static ResponseEntity<Response<Object>> handleJWTException(IllegalArgumentException ex) {
+    @ExceptionHandler(io.jsonwebtoken.security.SignatureException.class)
+    public static ResponseEntity<Response<Object>> handleJWTSignatureException(io.jsonwebtoken.security.SignatureException ex) {
         response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    @ExceptionHandler(MalformedJwtException.class)
+    public static ResponseEntity<Response<Object>> handleJWTMalformedException(MalformedJwtException ex) {
+        response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public static ResponseEntity<Response<Object>> handleJWTExpiredException(ExpiredJwtException ex) {
+        response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    @ExceptionHandler(UnsupportedJwtException.class)
+    public static ResponseEntity<Response<Object>> handleUnsupportedJWTException(UnsupportedJwtException ex) {
+        response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public static ResponseEntity<Response<Object>> handleBadCredentialsException(BadCredentialsException ex) {
+        response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, "Wrong Username or Password", null);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
