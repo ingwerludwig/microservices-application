@@ -1,10 +1,7 @@
 package com.javagrind.productservice.service.impl;
 
 import com.javagrind.productservice.dao.ProductDao;
-import com.javagrind.productservice.dto.request.CreateProductRequest;
-import com.javagrind.productservice.dto.request.DeleteProductRequest;
-import com.javagrind.productservice.dto.request.FindProductRequest;
-import com.javagrind.productservice.dto.request.UpdateProductRequest;
+import com.javagrind.productservice.dto.request.*;
 import com.javagrind.productservice.entity.ProductEntity;
 import com.javagrind.productservice.repositories.ProductRepository;
 import com.javagrind.productservice.service.ProductService;
@@ -42,6 +39,15 @@ public class ProductServiceImpl implements ProductService {
 
         if (result.map(products -> !products.isEmpty()).orElse(null))  return result;
         else return null;
+    }
+    @Override
+    public ProductEntity findProductById(FindProductByIdRequest request) {
+        Optional<ProductEntity> requestedProduct = productRepository.findById(request.getProductId());
+
+        if (requestedProduct.isPresent() && requestedProduct.get().getId().equals(request.getProductId())){
+            System.err.println(requestedProduct.get());
+           return requestedProduct.get();
+        }else{ throw new NoSuchElementException("Product not found");}
     }
 
     @Override

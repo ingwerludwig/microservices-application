@@ -1,11 +1,13 @@
 package com.javagrind.orderservice.services.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.javagrind.orderservice.dto.Response;
-import com.javagrind.orderservice.dto.request.CreateOrderRequest;
-import com.javagrind.orderservice.dto.request.FindOrderRequest;
-import com.javagrind.orderservice.dto.request.UpdateOrderRequest;
+import com.javagrind.orderservice.dto.request.Order.CreateOrderRequest;
+import com.javagrind.orderservice.dto.request.Order.FindOrderRequest;
+import com.javagrind.orderservice.dto.request.Order.UpdateOrderRequest;
 import com.javagrind.orderservice.entity.OrderEntity;
 import com.javagrind.orderservice.repositories.OrderRepository;
+import com.javagrind.orderservice.serviceClient.ProductServiceClient.ProductServiceClient;
 import com.javagrind.orderservice.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,13 +22,18 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
+    private final ProductServiceClient productServiceClient;
 
     @Override
     @Transactional
-    public OrderEntity create(CreateOrderRequest request) {
-        OrderEntity newOrder = new OrderEntity(request.getProductId(), request.getUserId(), "TEST",request.getDescription(),request.getAmounts(), 10000L* request.getAmounts());
-        orderRepository.save(newOrder);
-        return newOrder;
+    public OrderEntity create(CreateOrderRequest request) throws JsonProcessingException {
+        Response<Object> serviceResponse = productServiceClient.findProduct(request.getProductId());
+
+        if (serviceResponse.getStatusCode() == 200 && serviceResponse.getData() != null) {
+            OrderEntity newOrder = new OrderEntity(request.getProductId(), request.getUserId(), "TEST", request.getDescription(), request.getAmounts(), 10000L * request.getAmounts());
+            orderRepository.save(newOrder);
+            return newOrder;
+        } else {throw new RuntimeException(serviceResponse.getMessage());}
     }
 
     @Override

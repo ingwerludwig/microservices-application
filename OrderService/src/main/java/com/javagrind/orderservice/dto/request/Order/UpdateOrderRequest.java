@@ -1,4 +1,4 @@
-package com.javagrind.orderservice.dto.request;
+package com.javagrind.orderservice.dto.request.Order;
 
 import com.javagrind.orderservice.entity.OrderPayment;
 import lombok.Data;

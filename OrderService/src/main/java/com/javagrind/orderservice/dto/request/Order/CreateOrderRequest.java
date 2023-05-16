@@ -1,4 +1,4 @@
-package com.javagrind.orderservice.dto.request;
+package com.javagrind.orderservice.dto.request.Order;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,7 +20,6 @@ public class CreateOrderRequest {
 
     private String description;
 
-    @NotNull(message = "amounts cannot be null")
     @Min(value = 1, message = "amounts must be greater than 0")
     private Long amounts;
 }

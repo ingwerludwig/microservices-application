@@ -1,9 +1,10 @@
 package com.javagrind.orderservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.javagrind.orderservice.dto.Response;
-import com.javagrind.orderservice.dto.request.CreateOrderRequest;
-import com.javagrind.orderservice.dto.request.FindOrderRequest;
-import com.javagrind.orderservice.dto.request.UpdateOrderRequest;
+import com.javagrind.orderservice.dto.request.Order.CreateOrderRequest;
+import com.javagrind.orderservice.dto.request.Order.FindOrderRequest;
+import com.javagrind.orderservice.dto.request.Order.UpdateOrderRequest;
 import com.javagrind.orderservice.services.OrderService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response<Object>> createProduct (@Valid @RequestBody CreateOrderRequest request, BindingResult errors){
+    public ResponseEntity<Response<Object>> createProduct (@Valid @RequestBody CreateOrderRequest request, BindingResult errors) throws JsonProcessingException {
         Object newProduct = orderService.create(request);
         Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Create order successfully", newProduct);
         return ResponseEntity.ok().body(response);

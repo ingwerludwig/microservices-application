@@ -1,8 +1,8 @@
 package com.javagrind.orderservice.serviceClient.ProductServiceClient;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.javagrind.orderservice.dto.Response;
-import org.springframework.http.ResponseEntity;
 
 public interface ProductServiceClient {
-    ResponseEntity<Response<Object>> findProduct(String productId);
+    Response<Object> findProduct (String productId) throws JsonProcessingException;
 }

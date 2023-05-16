@@ -1,10 +1,7 @@
 package com.javagrind.productservice.controller;
 
 import com.javagrind.productservice.dto.Response;
-import com.javagrind.productservice.dto.request.CreateProductRequest;
-import com.javagrind.productservice.dto.request.DeleteProductRequest;
-import com.javagrind.productservice.dto.request.FindProductRequest;
-import com.javagrind.productservice.dto.request.UpdateProductRequest;
+import com.javagrind.productservice.dto.request.*;
 import com.javagrind.productservice.entity.ProductEntity;
 import com.javagrind.productservice.handler.GlobalExceptionHandler;
 import com.javagrind.productservice.service.ProductService;
@@ -34,9 +31,15 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/getProduct")
+    @PostMapping("/getProduct")
     public ResponseEntity<Response<Object>> findProduct (@Valid @RequestBody FindProductRequest request, BindingResult errors){
         Object result = productService.findProduct(request);
+        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find product successfully", result);
+        return ResponseEntity.ok().body(response);
+    }
+    @PostMapping("/getProductById")
+    public ResponseEntity<Response<Object>> findProductById (@Valid @RequestBody FindProductByIdRequest request, BindingResult errors){
+        Object result = productService.findProductById(request);
         Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find product successfully", result);
         return ResponseEntity.ok().body(response);
     }

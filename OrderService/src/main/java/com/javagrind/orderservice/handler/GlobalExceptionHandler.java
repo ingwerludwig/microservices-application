@@ -1,5 +1,8 @@
 package com.javagrind.orderservice.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javagrind.orderservice.dto.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -69,8 +74,22 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response<Object>> handleException(Exception ex) {
-        String errorMessage = "Internal Server Error";
-        Response<Object> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, errorMessage, null);
+        Response<Object> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Response<Object>> handleRuntimeException(RuntimeException ex ) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Object responseService = objectMapper.readValue(ex.getMessage(), new TypeReference<Response<Object>>() {});
+        Response<Object> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, "Internal Server Error on Service Call", responseService);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler(WebClientException.class)
+    public ResponseEntity<Response<Object>> handleWebClientException(WebClientException ex) {
+        String errorMessage = ex.getMessage();
+        Response<Object> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, "Call Service Error in WebClient", errorMessage);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

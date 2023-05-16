@@ -1,4 +1,4 @@
-package com.javagrind.orderservice.dto.request;
+package com.javagrind.orderservice.dto.request.Order;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
