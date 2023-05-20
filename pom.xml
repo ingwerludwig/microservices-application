@@ -17,12 +17,16 @@
         <module>ProductService</module>
         <module>OrderService</module>
         <module>AuthService</module>
+        <module>DiscoveryServer</module>
+        <module>APIGateway</module>
     </modules>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>2022.0.1</spring-cloud.version>
+        <SERVICE_URL_DEFAULT_ZONE>http://localhost:8080/eureka/</SERVICE_URL_DEFAULT_ZONE>
     </properties>
 
     <dependencyManagement>
@@ -34,8 +38,17 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
+
 
     <build>
         <plugins>
@@ -53,5 +66,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

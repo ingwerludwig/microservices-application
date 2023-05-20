@@ -16,16 +16,16 @@ import java.util.Arrays;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceClientImpl implements ProductServiceClient{
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     @Override
     public Response<Object> findProduct(String productId) {
-        String requestedUri = "http://localhost:8081/api/product/getProductById";
+        String requestedUri = "http://Product-Service/api/product/getProductById";
 
         try {
             FindProductByIdRequest request = new FindProductByIdRequest(productId);
 
-            ResponseEntity<Response<Object>> responseEntity = webClient.post()
+            ResponseEntity<Response<Object>> responseEntity = webClientBuilder.build().post()
                     .uri(requestedUri)
                     .body(Mono.just(request), FindProductByIdRequest.class)
                     .headers(httpHeaders -> {
