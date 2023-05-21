@@ -17,7 +17,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/api/")
+@RequestMapping(value = "/api/user")
 @RequiredArgsConstructor
 public class UserController {
 
