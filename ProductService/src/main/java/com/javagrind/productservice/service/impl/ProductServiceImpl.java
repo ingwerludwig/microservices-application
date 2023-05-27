@@ -5,6 +5,7 @@ import com.javagrind.productservice.dto.request.*;
 import com.javagrind.productservice.entity.ProductEntity;
 import com.javagrind.productservice.repositories.ProductRepository;
 import com.javagrind.productservice.service.ProductService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
+    @CircuitBreaker(name = "product", fallbackMethod = "getProductFallback")
     public ProductEntity create(CreateProductRequest request) {
         Optional<List<ProductEntity>> existProduct = productRepository.findByName(request.getProductName());
 
@@ -34,10 +36,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Object findProduct(FindProductRequest request) {
+    public List<ProductEntity> findProduct(FindProductRequest request) {
         Optional<List<ProductEntity>> result = productRepository.findSimilar(request.getProductName());
 
-        if (result.map(products -> !products.isEmpty()).orElse(null))  return result;
+        if (Boolean.TRUE.equals(result.map(products -> !products.isEmpty()).orElse(null)))  return result.get();
         else return null;
     }
     @Override

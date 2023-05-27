@@ -5,6 +5,8 @@ import com.javagrind.orderservice.dto.Response;
 import com.javagrind.orderservice.dto.request.Order.CreateOrderRequest;
 import com.javagrind.orderservice.dto.request.Order.FindOrderRequest;
 import com.javagrind.orderservice.dto.request.Order.UpdateOrderRequest;
+import com.javagrind.orderservice.entity.OrderEntity;
+import com.javagrind.orderservice.serviceClient.ProductServiceClient.ProductDao;
 import com.javagrind.orderservice.services.OrderService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,6 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
 @CrossOrigin(origins = "*")
@@ -24,24 +30,52 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response<Object>> createProduct (@Valid @RequestBody CreateOrderRequest request, BindingResult errors) throws JsonProcessingException {
-        Object newProduct = orderService.create(request);
-        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Create order successfully", newProduct);
+    public ResponseEntity<Response<OrderEntity>> createOrder(@Valid @RequestBody CreateOrderRequest request, BindingResult errors) throws JsonProcessingException {
+        CompletableFuture<Response<OrderEntity>> newOrder = orderService.create(request);
+        Response<OrderEntity> fallbackResponse = newOrder.join();
+
+        if (fallbackResponse.getStatusCode() == HttpStatus.OK.value()) {
+            return ResponseEntity.ok().body(fallbackResponse);
+        } else {
+            Response<OrderEntity> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, "Create order failed because " + fallbackResponse.getMessage(), null);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+
+    @PostMapping("/getOrder")
+    public ResponseEntity<Response<List<OrderEntity>>> findOrder(@Valid @RequestBody FindOrderRequest request, BindingResult errors){
+        List<OrderEntity> result = orderService.findOrder(request);
+        Response<List<OrderEntity>> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", result);
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/getOrder")
-    public ResponseEntity<Response<Object>> findProduct (@Valid @RequestBody FindOrderRequest request, BindingResult errors){
-        Object result = orderService.findOrder(request);
-        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", result);
-        return ResponseEntity.ok().body(response);
-    }
 
     @PutMapping("/update")
-    public ResponseEntity<Response<Object>> updateProduct(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request, BindingResult errors){
-        Object updatedProduct = orderService.update(orderId, userId, request);
-        Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update order successfully", updatedProduct);
+    public ResponseEntity<Response<OrderEntity>> updateOrder(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request, BindingResult errors){
+        OrderEntity updatedProduct = orderService.update(orderId, userId, request);
+        Response<OrderEntity> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update order successfully", updatedProduct);
         return ResponseEntity.ok().body(response);
     }
+
+    //    @PutMapping("/update")
+//    @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallback")
+//    @TimeLimiter(name = "Order-Service")
+//    public CompletableFuture<ResponseEntity<Response<Object>>> updateOrder(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request, BindingResult errors) {
+//        CompletableFuture<Object> service =
+//                CompletableFuture.supplyAsync(() -> orderService.update(orderId, userId, request))
+//                        .thenApplyAsync(updateEntity -> new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update order successfully", updateEntity));
+//
+//        return service.thenApplyAsync(result -> {
+//            Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update order successfully", result);
+//            return ResponseEntity.ok().body(response);
+//        });
+//    }
+
+//    public CompletableFuture<ResponseEntity<Response<Object>>> updateOrder(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request, BindingResult errors, TimeoutException ex) {
+//        // fetch results from the cache
+//        Response<Object> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE,ex.getMessage(),null)
+//        return CompletableFuture.supplyAsync(() -> ResponseEntity.internalServerError().body(response));
+//    }
 
 }

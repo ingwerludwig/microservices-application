@@ -16,6 +16,8 @@ import org.springframework.web.reactive.function.client.WebClientException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.NoSuchElementException;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -92,4 +94,12 @@ public class GlobalExceptionHandler {
         Response<Object> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, "Call Service Error in WebClient", errorMessage);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
+    @ExceptionHandler(TimeoutException.class)
+    public ResponseEntity<Response<Object>> handleTimeoutException(CompletionException ex)  {
+        String errorMessage = ex.getMessage();
+        Response<Object> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, "Request timeout, service unable to retrieve on time", errorMessage);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
 }

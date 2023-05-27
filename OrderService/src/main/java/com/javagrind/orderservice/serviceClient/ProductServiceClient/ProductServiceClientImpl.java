@@ -19,13 +19,13 @@ public class ProductServiceClientImpl implements ProductServiceClient{
     private final WebClient.Builder webClientBuilder;
 
     @Override
-    public Response<Object> findProduct(String productId) {
+    public Response<ProductDao> findProduct(String productId) {
         String requestedUri = "http://Product-Service/api/product/getProductById";
 
         try {
             FindProductByIdRequest request = new FindProductByIdRequest(productId);
 
-            ResponseEntity<Response<Object>> responseEntity = webClientBuilder.build().post()
+            ResponseEntity<Response<ProductDao>> responseEntity = webClientBuilder.build().post()
                     .uri(requestedUri)
                     .body(Mono.just(request), FindProductByIdRequest.class)
                     .headers(httpHeaders -> {
@@ -33,10 +33,10 @@ public class ProductServiceClientImpl implements ProductServiceClient{
                         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
                     })
                     .retrieve()
-                    .toEntity(new ParameterizedTypeReference<Response<Object>>() {})
+                    .toEntity(new ParameterizedTypeReference<Response<ProductDao>>() {})
                     .block();
 
-            Response<Object> data = responseEntity.getBody();
+            Response<ProductDao> data = responseEntity.getBody();
             System.err.println(data);
             return data;
 
