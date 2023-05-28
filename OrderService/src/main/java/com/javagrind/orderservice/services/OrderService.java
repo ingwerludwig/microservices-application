@@ -15,7 +15,7 @@ public interface OrderService {
 
     CompletableFuture<Response<OrderEntity>> create(CreateOrderRequest request) throws JsonProcessingException;
 
-    List<OrderEntity> findOrder(FindOrderRequest request);
+    Response<List<OrderEntity>> findOrder(FindOrderRequest request);
 
-    OrderEntity update(String orderId, String userId, UpdateOrderRequest request);
+    Response<OrderEntity> update(String orderId, String userId, UpdateOrderRequest request);
 }

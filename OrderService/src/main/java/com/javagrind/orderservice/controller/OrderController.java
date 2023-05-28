@@ -30,32 +30,30 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response<OrderEntity>> createOrder(@Valid @RequestBody CreateOrderRequest request, BindingResult errors) throws JsonProcessingException {
+    public ResponseEntity<Response<OrderEntity>> createOrder(@Valid @RequestBody CreateOrderRequest request) throws JsonProcessingException {
         CompletableFuture<Response<OrderEntity>> newOrder = orderService.create(request);
-        Response<OrderEntity> fallbackResponse = newOrder.join();
+        Response<OrderEntity> result = newOrder.join();
 
-        if (fallbackResponse.getStatusCode() == HttpStatus.OK.value()) {
-            return ResponseEntity.ok().body(fallbackResponse);
-        } else {
-            Response<OrderEntity> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, "Create order failed because " + fallbackResponse.getMessage(), null);
-            return ResponseEntity.internalServerError().body(response);
-        }
+        if (result.getStatusCode() == HttpStatus.OK.value())  return ResponseEntity.ok().body(result);
+        else    return ResponseEntity.internalServerError().body(result);
     }
 
 
     @PostMapping("/getOrder")
-    public ResponseEntity<Response<List<OrderEntity>>> findOrder(@Valid @RequestBody FindOrderRequest request, BindingResult errors){
-        List<OrderEntity> result = orderService.findOrder(request);
-        Response<List<OrderEntity>> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", result);
-        return ResponseEntity.ok().body(response);
+    public ResponseEntity<Response<List<OrderEntity>>> findOrder(@Valid @RequestBody FindOrderRequest request){
+        Response<List<OrderEntity>> result = orderService.findOrder(request);
+
+        if (result.getStatusCode() == HttpStatus.OK.value())    return ResponseEntity.ok().body(result);
+        else    return ResponseEntity.internalServerError().body(result);
     }
 
 
     @PutMapping("/update")
-    public ResponseEntity<Response<OrderEntity>> updateOrder(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request, BindingResult errors){
-        OrderEntity updatedProduct = orderService.update(orderId, userId, request);
-        Response<OrderEntity> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update order successfully", updatedProduct);
-        return ResponseEntity.ok().body(response);
+    public ResponseEntity<Response<OrderEntity>> updateOrder(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request){
+        Response<OrderEntity> result = orderService.update(orderId, userId, request);
+
+        if (result.getStatusCode() == HttpStatus.OK.value())    return ResponseEntity.ok().body(result);
+        else    return ResponseEntity.internalServerError().body(result);
     }
 
     //    @PutMapping("/update")

@@ -46,62 +46,74 @@ public class OrderServiceImpl implements OrderService {
                     catch (JsonProcessingException e) {throw new RuntimeException(e);}
                 });
 
-        return service.thenApplyAsync(response -> {
-            if (response.getStatusCode() == HttpStatus.OK.value() && response.getData() != null) {
+        return service.thenApplyAsync(result -> {
+            if (result.getStatusCode() == HttpStatus.OK.value() && result.getData() != null) {
+                ProductDao dataObject = result.getData();
 
-                ProductDao dataObject = response.getData();
-                Long multipliedValue = dataObject.getPrice() * request.getAmounts();
-
-                OrderEntity newOrder = new OrderEntity(
-                        dataObject.getId(),
-                        request.getUserId(),
-                        dataObject.getProductName(),
-                        request.getDescription(),
-                        request.getAmounts(),
-                        multipliedValue
-                );
+                OrderEntity newOrder = new OrderEntity(dataObject.getId(), request.getUserId(), dataObject.getProductName(), request.getDescription(), request.getAmounts(), dataObject.getPrice() * request.getAmounts());
                 orderRepository.save(newOrder);
-                LOGGER.info("Order has been created \n" + newOrder);
+                LOGGER.info("Order has been created \n" + newOrder+ "\n");
 
                 return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Create order successfully", newOrder);
-            } else  {throw new RuntimeException(response.getMessage());}
+            }else if(result.getStatusCode() == HttpStatus.NOT_FOUND.value() && result.getData() == null) {
+                LOGGER.info("Order failed to created \n" + result.getMessage() + "\n");
+                return new Response<>(result.getStatusCode(), result.getSuccess(), result.getMessage(), null);
+            }else{
+                throw new RuntimeException(result.getMessage());}
         });
     }
 
     @Override
     @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallbackListOrder")
-    public List<OrderEntity> findOrder(FindOrderRequest request) {
+    public Response<List<OrderEntity>> findOrder(FindOrderRequest request) {
         Optional<List<OrderEntity>> result = orderRepository.findByUserId(request.getUserId());
 
-        if (Boolean.TRUE.equals(result.map(products -> !products.isEmpty()).orElse(null)))  return result.get();
-        else throw new NoSuchElementException("Order not found");
+        if (Boolean.TRUE.equals(result.map(products -> !products.isEmpty()))) {
+            LOGGER.info("Order has been found \n" + result+ "\n");
+            return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", result.get());
+        }else {
+            LOGGER.error("Order failed to created \n" + result + "\n");
+            return new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, "Order Not Found", null);
+        }
     }
 
     @Override
     @Transactional
-    @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallbackOrder")
-    public OrderEntity update(String orderId, String userId, UpdateOrderRequest request) {
+    @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallbackUpdateOrder")
+    public Response<OrderEntity> update(String orderId, String userId, UpdateOrderRequest request) {
         Optional<OrderEntity> requestedOrder = orderRepository.findById(orderId);
 
         if (requestedOrder.isPresent() && requestedOrder.get().getId().equals(orderId)){
             modelMapper.map(request, requestedOrder.get());
             OrderEntity savedEntity = orderRepository.save(requestedOrder.get());
-            return savedEntity;
-        }else{ throw new NoSuchElementException("Order not found");}
+            LOGGER.info("Order has been updated \n" + savedEntity+ "\n");
+            return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", savedEntity);
+        }else{
+            LOGGER.error("Order failed to updated \n" + "Order Not Found" + "\n");
+            return new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, "Order Not Found", null);
+        }
     }
 
 
     public CompletableFuture<Response<OrderEntity>> fallbackOrder(CreateOrderRequest request, Throwable e) {
-        LOGGER.error("Order service is unavailable: " + e);
-        String errorMessage = "Order Service is unavailable, try again later. Error caused : " + e.getMessage();
+        LOGGER.error("Create Order failed: " + e);
+        String errorMessage = "Create Order failed, try again later. Error caused : " + e.getMessage();
         Response<OrderEntity> fallbackResponse = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, errorMessage, null);
         return CompletableFuture.completedFuture(fallbackResponse);
     }
 
-    public List<OrderEntity> fallbackListOrder(CreateOrderRequest request, Throwable e) {
-        LOGGER.error("Order service is unavailable: " + e);
-        String errorMessage = "Order Service is unavailable, try again later. Error caused : " + e.getMessage();
-        return null;
+    public Response<OrderEntity> fallbackUpdateOrder(String orderId, String userId, UpdateOrderRequest request, Throwable e) {
+        LOGGER.error("Update Order failed: " + e);
+        String errorMessage = "Update Order failed, try again later. Error caused : " + e.getMessage();
+        Response<OrderEntity> fallbackResponse = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, errorMessage, null);
+        return fallbackResponse;
+    }
+
+    public Response<List<OrderEntity>> fallbackListOrder(FindOrderRequest request, Throwable e) {
+        LOGGER.error("Find Order failed: " + e);
+        String errorMessage = "Find Order failed, try again later. Error caused : " + e.getMessage();
+        Response<List<OrderEntity>> fallbackResponse = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, errorMessage, null);
+        return fallbackResponse;
     }
 
     //    @PutMapping("/update")
