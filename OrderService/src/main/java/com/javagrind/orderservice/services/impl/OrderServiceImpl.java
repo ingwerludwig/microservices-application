@@ -53,13 +53,15 @@ public class OrderServiceImpl implements OrderService {
                 OrderEntity newOrder = new OrderEntity(dataObject.getId(), request.getUserId(), dataObject.getProductName(), request.getDescription(), request.getAmounts(), dataObject.getPrice() * request.getAmounts());
                 orderRepository.save(newOrder);
                 LOGGER.info("Order has been created \n" + newOrder+ "\n");
-
                 return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Create order successfully", newOrder);
+
             }else if(result.getStatusCode() == HttpStatus.NOT_FOUND.value() && result.getData() == null) {
                 LOGGER.info("Order failed to created \n" + result.getMessage() + "\n");
                 return new Response<>(result.getStatusCode(), result.getSuccess(), result.getMessage(), null);
+
             }else{
-                throw new RuntimeException(result.getMessage());}
+                throw new RuntimeException(result.getMessage());
+            }
         });
     }
 
@@ -71,6 +73,7 @@ public class OrderServiceImpl implements OrderService {
         if (Boolean.TRUE.equals(result.map(products -> !products.isEmpty()))) {
             LOGGER.info("Order has been found \n" + result+ "\n");
             return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", result.get());
+
         }else {
             LOGGER.error("Order failed to created \n" + result + "\n");
             return new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, "Order Not Found", null);
@@ -88,6 +91,7 @@ public class OrderServiceImpl implements OrderService {
             OrderEntity savedEntity = orderRepository.save(requestedOrder.get());
             LOGGER.info("Order has been updated \n" + savedEntity+ "\n");
             return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", savedEntity);
+
         }else{
             LOGGER.error("Order failed to updated \n" + "Order Not Found" + "\n");
             return new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, "Order Not Found", null);

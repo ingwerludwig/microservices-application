@@ -34,26 +34,24 @@ public class OrderController {
         CompletableFuture<Response<OrderEntity>> newOrder = orderService.create(request);
         Response<OrderEntity> result = newOrder.join();
 
-        if (result.getStatusCode() == HttpStatus.OK.value())  return ResponseEntity.ok().body(result);
-        else    return ResponseEntity.internalServerError().body(result);
+        HttpStatus httpStatus = HttpStatus.valueOf(result.getStatusCode());
+        return ResponseEntity.status(httpStatus).body(result);
     }
 
 
     @PostMapping("/getOrder")
     public ResponseEntity<Response<List<OrderEntity>>> findOrder(@Valid @RequestBody FindOrderRequest request){
         Response<List<OrderEntity>> result = orderService.findOrder(request);
-
-        if (result.getStatusCode() == HttpStatus.OK.value())    return ResponseEntity.ok().body(result);
-        else    return ResponseEntity.internalServerError().body(result);
+        HttpStatus httpStatus = HttpStatus.valueOf(result.getStatusCode());
+        return ResponseEntity.status(httpStatus).body(result);
     }
 
 
     @PutMapping("/update")
     public ResponseEntity<Response<OrderEntity>> updateOrder(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request){
         Response<OrderEntity> result = orderService.update(orderId, userId, request);
-
-        if (result.getStatusCode() == HttpStatus.OK.value())    return ResponseEntity.ok().body(result);
-        else    return ResponseEntity.internalServerError().body(result);
+        HttpStatus httpStatus = HttpStatus.valueOf(result.getStatusCode());
+        return ResponseEntity.status(httpStatus).body(result);
     }
 
     //    @PutMapping("/update")
