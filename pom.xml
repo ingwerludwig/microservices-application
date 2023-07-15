@@ -19,6 +19,7 @@
         <module>AuthService</module>
         <module>DiscoveryServer</module>
         <module>APIGateway</module>
+        <module>PaymentService</module>
     </modules>
 
     <properties>

@@ -11,6 +11,7 @@
         <module name="APIGateway" />
         <module name="OrderService" />
         <module name="ProductService" />
+        <module name="PaymentService" />
         <module name="AuthService" />
       </profile>
     </annotationProcessing>
@@ -21,6 +22,7 @@
       <module name="AuthService" options="-parameters" />
       <module name="DiscoveryServer" options="-parameters" />
       <module name="OrderService" options="-parameters" />
+      <module name="PaymentService" options="-parameters" />
       <module name="ProductService" options="-parameters" />
     </option>
   </component>
