@@ -1,18 +1,21 @@
 package com.javagrind.paymentservice.dto.Request.MidtransPaymentRequest.MidtransPaymentObjects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Validated
 public class TransactionDetails {
-
-    @NotEmpty(message = "order_id cannot be empty")
+    @JsonProperty("order_id")
     private String order_id;
 
-    @NotEmpty(message = "gross_amount cannot be empty")
+    @JsonProperty("gross_amount")
     private Integer gross_amount;
 }
