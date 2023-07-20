@@ -1,7 +1,6 @@
 package com.javagrind.orderservice.services.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
 import com.javagrind.orderservice.dto.Response;
 import com.javagrind.orderservice.dto.request.Order.CreateOrderRequest;
 import com.javagrind.orderservice.dto.request.Order.FindOrderRequest;
@@ -14,7 +13,6 @@ import com.javagrind.orderservice.services.OrderService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
@@ -22,8 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 

@@ -20,6 +20,7 @@
         <module>DiscoveryServer</module>
         <module>APIGateway</module>
         <module>PaymentService</module>
+        <module>OrchestratorService</module>
     </modules>
 
     <properties>
