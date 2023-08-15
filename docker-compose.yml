@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka
+    container_name: kafka
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    ports:
+      - "9092:9092"
+
+  control-center:
+    image: confluentinc/cp-enterprise-control-center
+    container_name: control-center
+    environment:
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: localhost:9092
+    ports:
+      - "9021:9021"
+    depends_on:
+      - kafka

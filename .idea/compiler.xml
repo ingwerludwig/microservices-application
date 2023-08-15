@@ -7,25 +7,32 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="DiscoveryServer" />
-        <module name="OrchestratorService" />
-        <module name="ProductService" />
-        <module name="AuthService" />
-        <module name="APIGateway" />
-        <module name="OrderService" />
-        <module name="PaymentService" />
+        <module name="api-gateway" />
+        <module name="product-service" />
+        <module name="auth-service" />
+        <module name="discovery-server" />
+        <module name="payment-service" />
+        <module name="order-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="APIGateway" target="18" />
+      <module name="kafka-server" target="18" />
+      <module name="OrchestratorService" target="18" />
+      <module name="WorkflowManager" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="APIGateway" options="-parameters" />
-      <module name="AuthService" options="-parameters" />
-      <module name="DiscoveryServer" options="-parameters" />
       <module name="OrchestratorService" options="-parameters" />
-      <module name="OrderService" options="-parameters" />
-      <module name="PaymentService" options="-parameters" />
-      <module name="ProductService" options="-parameters" />
+      <module name="api-gateway" options="-parameters" />
+      <module name="auth-service" options="-parameters" />
+      <module name="discovery-server" options="-parameters" />
+      <module name="kafka-server" options="-parameters" />
+      <module name="order-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
+      <module name="product-service" options="-parameters" />
     </option>
   </component>
 </project>
