@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   zookeeper:
@@ -15,16 +15,124 @@ services:
     environment:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    expose:
+      - "9092"
     ports:
       - "9092:9092"
 
-  control-center:
-    image: confluentinc/cp-enterprise-control-center
-    container_name: control-center
-    environment:
-      CONTROL_CENTER_REPLICATION_FACTOR: 1
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: localhost:9092
+  redis:
+    image: redis
+    container_name: redis
     ports:
-      - "9021:9021"
+      - "6379:6379"
+
+  auth-db:
+    image: postgres
+    container_name: auth-db
+    environment:
+      POSTGRES_DB: AuthDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 769aD145
+      PGDATA: /data/postgres
+    volumes:
+      - ./auth-db:/data/postgres
+    expose:
+      - "5433"
+    ports:
+      - "5433:5432"
+    restart: always
+
+  order-db:
+    image: postgres
+    container_name: order-db
+    environment:
+      POSTGRES_DB: OrderDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 769aD145
+      PGDATA: /data/postgres
+    volumes:
+      - ./order-db:/data/postgres
+    expose:
+      - "5434"
+    ports:
+      - "5434:5432"
+    restart: always
+
+  discovery-server:
+    image: ingwerludwig/discovery-server:latest
+    container_name: discovery-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8167:8167"
+
+  api-gateway:
+    image: ingwerludwig/api-gateway:latest
+    container_name: api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+    ports:
+      - "8080:8080"
     depends_on:
-      - kafka
+      - discovery-server
+
+  auth-service:
+    image: ingwerludwig/auth-service:latest
+    container_name: auth-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8081:8081"
+    expose:
+      - "8081"
+    depends_on:
+      - auth-db
+      - redis
+      - discovery-server
+      - api-gateway
+
+  product-service:
+    image: ingwerludwig/product-service:latest
+    container_name: product-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8082:8082"
+    expose:
+      - "8082"
+    depends_on:
+      - discovery-server
+      - api-gateway
+      - auth-service
+
+  order-service:
+    image: ingwerludwig/order-service:latest
+    container_name: order-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8083:8083"
+    expose:
+      - "8083"
+    depends_on:
+      - order-db
+      - discovery-server
+      - api-gateway
+      - auth-service
+      - product-service
+
+  payment-service:
+    image: ingwerludwig/payment-service:latest
+    container_name: payment-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8084:8084"
+    expose:
+      - "8084"
+    depends_on:
+      - discovery-server
+      - api-gateway
+      - auth-service
+      - product-service

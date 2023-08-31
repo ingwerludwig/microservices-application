@@ -10,26 +10,26 @@
         <module name="api-gateway" />
         <module name="product-service" />
         <module name="auth-service" />
-        <module name="discovery-server" />
         <module name="payment-service" />
         <module name="order-service" />
+        <module name="discovery-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="APIGateway" target="18" />
-      <module name="kafka-server" target="18" />
-      <module name="OrchestratorService" target="18" />
-      <module name="WorkflowManager" target="17" />
+      <module name="api-gateway" target="18" />
+      <module name="auth-service" target="18" />
+      <module name="discovery-server" target="18" />
+      <module name="Microservices" target="18" />
+      <module name="order-service" target="18" />
+      <module name="payment-service" target="18" />
+      <module name="product-service" target="18" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="APIGateway" options="-parameters" />
-      <module name="OrchestratorService" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
-      <module name="kafka-server" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="payment-service" options="-parameters" />
       <module name="product-service" options="-parameters" />

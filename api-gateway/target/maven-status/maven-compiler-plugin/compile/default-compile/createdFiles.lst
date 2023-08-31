@@ -1,3 +1,4 @@
+com/javagrind/apigateway/controller/BaseController.class
 com/javagrind/apigateway/filter/JwtAuthGatewayFilter$1.class
 com/javagrind/apigateway/config/WebClientConfig.class
 com/javagrind/apigateway/filter/JwtAuthGatewayFilter$Config.class

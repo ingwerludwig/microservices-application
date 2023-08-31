@@ -4,6 +4,7 @@ com/javagrind/orderservice/handler/WebClientCallExceptionHandler.class
 com/javagrind/orderservice/serviceClient/ProductServiceClient/ProductDao$ProductDaoBuilder.class
 com/javagrind/orderservice/serviceClient/ProductServiceClient/ProductServiceClient.class
 com/javagrind/orderservice/services/OrderService.class
+com/javagrind/orderservice/config/KafkaConfig.class
 com/javagrind/orderservice/serviceClient/ProductServiceClient/ProductServiceClientImpl.class
 com/javagrind/orderservice/dto/request/ProductServiceClient/FindProductByIdRequest.class
 com/javagrind/orderservice/entity/OrderPayment.class
@@ -16,8 +17,10 @@ com/javagrind/orderservice/controller/OrderController.class
 com/javagrind/orderservice/serviceClient/ProductServiceClient/ProductServiceClientImpl$1.class
 com/javagrind/orderservice/repositories/OrderRepository.class
 com/javagrind/orderservice/entity/OrderEntity.class
+com/javagrind/orderservice/config/ObjectMapperConfig.class
 com/javagrind/orderservice/dto/request/Order/FindOrderRequest.class
 com/javagrind/orderservice/config/ModelMapperConfig.class
+com/javagrind/orderservice/events/CreatedOrderEvent.class
 com/javagrind/orderservice/handler/GlobalExceptionHandler$1.class
 com/javagrind/orderservice/services/impl/OrderServiceImpl.class
 com/javagrind/orderservice/serviceClient/ProductServiceClient/ProductServiceClientImpl$2.class

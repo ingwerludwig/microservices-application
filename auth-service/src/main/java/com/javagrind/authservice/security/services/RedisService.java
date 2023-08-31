@@ -11,7 +11,7 @@ import redis.clients.jedis.exceptions.JedisException;
 @RequiredArgsConstructor
 public class RedisService {
     private final JwtUtils jwtUtils;
-    JedisPool jedisPool = new JedisPool("localhost", 6379);
+    JedisPool jedisPool = new JedisPool("redis", 6379);
 
     public void store(String token){
         try (Jedis jedis = jedisPool.getResource()) {
