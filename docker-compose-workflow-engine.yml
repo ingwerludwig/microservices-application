@@ -1,0 +1,67 @@
+version: '2.3'
+name: Netflix-Conductor-Workflow-Engine
+networks:
+    microservice-core-service_default:
+        external: true
+
+services:
+
+  conductor-ui:
+    image: flaviostutz/conductor-ui
+    environment:
+      - WF_SERVER=http://conductor-server:8080/api/
+    networks:
+      - microservice-core-service_default
+    ports:
+      - 5001:5000
+    links:
+      - conductor-server
+    
+  conductor-server:
+    image: flaviostutz/conductor-server
+    environment:
+      - CONFIG_PROP=config.properties
+      - DYNOMITE_HOSTS= dynomite:8102:us-east-1c
+      - ELASTICSEARCH_URL=elasticsearch:9200
+    ports:
+      - 8089:8080
+    networks:
+      - microservice-core-service_default
+    links:
+      - elasticsearch:es
+      - dynomite:dyno1
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      dynomite:
+        condition: service_healthy
+
+  dynomite:
+    image: flaviostutz/dynomite:latest
+    ports:
+      - 8102:8102
+    networks:
+      - microservice-core-service_default
+    healthcheck:
+      test: timeout 5 bash -c 'cat < /dev/null > /dev/tcp/localhost/8102'
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.8
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - transport.host=0.0.0.0
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - microservice-core-service_default
+    healthcheck:
+      test: timeout 5 bash -c 'cat < /dev/null > /dev/tcp/localhost/9300'
+      interval: 5s
+      timeout: 5s
+      retries: 12

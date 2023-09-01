@@ -1,7 +1,0 @@
-/Volumes/IngwerSSD/DATA/PROGRAMMING/JAVA/Microservices/api-gateway/src/main/java/com/javagrind/apigateway/filter/JwtAuthGatewayFilter.java
-/Volumes/IngwerSSD/DATA/PROGRAMMING/JAVA/Microservices/api-gateway/src/main/java/com/javagrind/apigateway/controller/BaseController.java
-/Volumes/IngwerSSD/DATA/PROGRAMMING/JAVA/Microservices/api-gateway/src/main/java/com/javagrind/apigateway/filter/RouteFilter.java
-/Volumes/IngwerSSD/DATA/PROGRAMMING/JAVA/Microservices/api-gateway/src/main/java/com/javagrind/apigateway/APIGatewayApplication.java
-/Volumes/IngwerSSD/DATA/PROGRAMMING/JAVA/Microservices/api-gateway/src/main/java/com/javagrind/apigateway/dto/Response.java
-/Volumes/IngwerSSD/DATA/PROGRAMMING/JAVA/Microservices/api-gateway/src/main/java/com/javagrind/apigateway/handler/WebClientCallExceptionHandler.java
-/Volumes/IngwerSSD/DATA/PROGRAMMING/JAVA/Microservices/api-gateway/src/main/java/com/javagrind/apigateway/config/WebClientConfig.java
