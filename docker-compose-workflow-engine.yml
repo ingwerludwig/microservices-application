@@ -1,5 +1,5 @@
 version: '2.3'
-name: Netflix-Conductor-Workflow-Engine
+name: netflix-conductor-workflow-engine
 networks:
     microservice-core-service_default:
         external: true
