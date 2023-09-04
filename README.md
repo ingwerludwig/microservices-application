@@ -2,7 +2,7 @@
 
 This microservices contains :
 # Spring Boot Based
-Discovery Server (use Netflix Eureka)
+Discovery Server (use Netflix Eureka) <br>
 API Gateway (use Spring Cloud)
 AuthService
 ProductService
