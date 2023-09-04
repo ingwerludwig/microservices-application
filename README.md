@@ -2,12 +2,12 @@
 
 This microservices contains :
 # Spring Boot Based
-Discovery Server (use Netflix Eureka) <br>
-API Gateway (use Spring Cloud)
-AuthService
-ProductService
-OrderService 
-PaymentService
+- Discovery Server (use Netflix Eureka) <br>
+- API Gateway (use Spring Cloud)<br>
+- AuthService<br>
+- ProductService<br>
+- OrderService <br>
+- PaymentService<br>
 
 # Golang Based
 Notification Service
