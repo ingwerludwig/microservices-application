@@ -98,12 +98,12 @@ First thing first, install <a href="https://docs.spring.io/spring-boot/docs/1.0.
    ```sh
    ./workflow-engine-start.sh
    ```
-   Notes : Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins)
-   to make every service ready and registered in Netflix Eureka Discovery Server and Spring Cloud Gateway
+   Notes : Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins) <br>
+   to make every service ready and registered in Netflix Eureka Discovery Server and Spring Cloud Gateway <br>
 
-   UI Port
-   http://localhost:8167 for Checking health and availability of All services
-   http://localhost:5001 for Using Netflix Conductor UI
+   UI Port <br>
+   http://localhost:8167 for Checking health and availability of All services <br>
+   http://localhost:5001 for Using Netflix Conductor UI <br>
 
 
 <!-- USAGE EXAMPLES -->
