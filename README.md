@@ -107,9 +107,8 @@ For more examples, please look to the <a href="">documentation</a>
 Distributed under the MIT License.
 
 ## Contact
-
-Ingwer Ludwig - ingwerflash@gmail.com
-Farhan Dwyan - dwyanfarhan@gmail.com
+Ingwer Ludwig - ingwerflash@gmail.com <br>
+Farhan Dwyan - dwyanfarhan@gmail.com <br>
 
 Project Link: <a href="https://github.com/ingwerludwig/microservices-application">Click here</a>
 
