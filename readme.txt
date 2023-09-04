@@ -28,9 +28,9 @@ docker pull ingwerludwig/product-service
 chmod +x workflow-engine-start.sh
 chmod +x core-service-start.sh
 
-5. Run shell file
-./core-service-start.sh
-./workflow-engine-start.sh
+5. Run shell file sequentially
+    1. ./core-service-start.sh
+    2. ./workflow-engine-start.sh
 
 
 — Notes : Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins)
