@@ -8,16 +8,14 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisException;
 
-@Service()
+@Service
 @RequiredArgsConstructor
 public class RedisService {
     private final JwtUtils jwtUtils;
-
-    @Value("${redis.host}")
+    @Value("{redis.host")
     private String redisHost;
 
-    @Value("${redis.port}")
-    private int redisPort;
+    private final Integer redisPort=6379;
     JedisPool jedisPool = new JedisPool(redisHost, redisPort);
 
     public void store(String token){
