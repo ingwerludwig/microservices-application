@@ -6,11 +6,34 @@
   <component name="ChangeListManager">
     <list default="true" id="1d67f7bd-2bae-44e3-8079-083b8ccbd301" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core-service-start.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-core-service.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-workflow-engine.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/b74a3cef94dddbd56251aa0c559e5a10cfaf7bac58dee7540f0b9308b8e40804" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/c6dbae3ca097c8ebf6ab543da48a1713e80b714079f202ae63e40dddd3b62237" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/de5cc53fd7314b69e22490f88a36cf60c06a1050c3fe7548a144b5b7cf15ab97" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/javagrind/authservice/security/services/RedisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/javagrind/authservice/security/services/RedisService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/classes/com/javagrind/authservice/security/services/RedisService.class" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/target/classes/com/javagrind/authservice/security/services/RedisService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/layers/40ce857742c4335cc738a41640fce6b94c439a441f6bfa370377be6c5441e14e/2862eee063764145ed19d5493f435af311348cd3a86bf5590ac05b441eb668a6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/71b203e255ab7e55e5c3ea0dcfc6d3a17e8d439aac74ea16515b0c3f939a2751" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/e9390497eab673496a2576fd06fa758624a40df1dccace946b77eec8a96093a3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/ed3b156d1c3b3ecfef44068ff4555f6e142d89aa059d0355f5f76f4eab71cdea" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.digest" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/target/jib-image.digest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.id" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/target/jib-image.id" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.json" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/target/jib-image.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/54f4f02e363d37676c7be4474d9e0a8c436cdc2c4c656723e79ec943fc15ce87" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/825ea51811f2d3c0165f055f465e1211e17af785e74517163affe26d031b5b70" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/d79d0f87b9cfd72af3e752f6a2bea5efaaa25b43b1d4abb39b64d26174e06850" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-workflow-engine.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-workflow-engine.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/210bdbd92b211f035a7137ea371980edf4d58f23ce6b3d470a0116e2db393bfe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/79b5f0173e3d30773be1f39e2983e0809fa34fb09b85a02a7663694d9c7e2850" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/b07e142335225cd7331f8f9642e8390c5cf9a3349691af0dce1034379e79706a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/68262db2fb106554bf5a0f264df923fef7a387a7de32733012df42fb475e0acf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/a68bc3b9e8e29c3d41135be93064f7eac39e216d9d84c0dbd416bdf43bdea8b0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/e247fa2fa282ab401288227ea9f9d3a62b38ce0128417965716e5187ed2b513e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/195d2f09b701a2d3b67ae3761c10c355d59ec97956ead4b1cb5cd1a667f75093" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/4f0ba5db396f71fd230e58cf2d00368c5ec756f74714d5bc89cce93bd26966a1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/922c24eaac7a87f483e90843738b472d341baf4335816e68bbc5910d8c613eb9" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/readme.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/workflow-engine-start.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workflow-engine-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/workflow-engine-start.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +93,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.APIGatewayApplication">
+  <component name="RunManager" selected="Spring Boot.DiscoveryServerApplication">
     <configuration name="APIGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="api-gateway" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.javagrind.apigateway.APIGatewayApplication" />
@@ -137,7 +160,8 @@
       <workItem from="1693388832495" duration="540000" />
       <workItem from="1693409796017" duration="20757000" />
       <workItem from="1693570026458" duration="1314000" />
-      <workItem from="1693571749258" duration="88000" />
+      <workItem from="1693571749258" duration="544000" />
+      <workItem from="1693823799565" duration="3282000" />
     </task>
     <servers />
   </component>

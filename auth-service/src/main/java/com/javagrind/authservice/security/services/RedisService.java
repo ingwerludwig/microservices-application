@@ -2,6 +2,7 @@ package com.javagrind.authservice.security.services;
 
 import com.javagrind.authservice.security.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -11,7 +12,13 @@ import redis.clients.jedis.exceptions.JedisException;
 @RequiredArgsConstructor
 public class RedisService {
     private final JwtUtils jwtUtils;
-    JedisPool jedisPool = new JedisPool("redis", 6379);
+
+    @Value("${redis.host}")
+    private String redisHost;
+
+    @Value("${redis.port}")
+    private int redisPort;
+    JedisPool jedisPool = new JedisPool(redisHost, redisPort);
 
     public void store(String token){
         try (Jedis jedis = jedisPool.getResource()) {

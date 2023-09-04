@@ -1,1 +1,1 @@
-{"image":"registry.hub.docker.com/ingwerludwig/auth-service","imageId":"sha256:5e3d6b6627e52b65f1eb764a00ceac65384e6c768a87fa0077136966adde1f17","imageDigest":"sha256:2e929a2f2c87c00d14dc3cdc978e65f8fea713e04a9ca6675ca8ebaf0f83ac28","tags":["latest"],"imagePushed":true}
+{"image":"registry.hub.docker.com/ingwerludwig/auth-service","imageId":"sha256:5923cb935693423b5204db47cec77a0c2055e0a0ee8181e0fd434fe6cf93c185","imageDigest":"sha256:1b854f48ca1f17567f4f216eb6876ffec628d4e37f204a88363a8a6eed8982cb","tags":["latest"],"imagePushed":true}
