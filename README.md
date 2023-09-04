@@ -1,6 +1,11 @@
 # About This Backend Microservice Project
 
-This microservices contains :
+This microservices contains golang services and spring boot service. <br>
+
+We use Spring Cloud Technology for API Gateway <br>
+And also we use Netflix Technologies : <br>
+- Discovery Server using Netflix Eureka <br>
+- Worfklow Engine for Orchestrating Microservices using Netflix Conductor <br>
 
 ## Spring Boot Based
 - Discovery Server (use Netflix Eureka) <br>
