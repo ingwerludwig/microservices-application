@@ -30,37 +30,40 @@ This microservices contains :
 | * [![Dynomite][Dynomite.com]][Dynomite-url] |  |
 
 
-# Prerequisites
-First thing first, install <a href="https://docs.spring.io/spring-boot/docs/1.0.2.RELEASE/reference/html/getting-started-installing-spring-boot.html">SpringBoot</a> and follow those instruction from that documentation
-
 # Installation
+## If you want to develop Spring Application, go from step 1-7 <br>
+## If you want to running project only with docker container, go from step 8-10 <br>
 
-1. Clone the repo
+1. Installation Java
+   First thing first, install <a href="https://docs.spring.io/spring-boot/docs/1.0.2.RELEASE/reference/html/getting-started-installing-spring-boot.html">SpringBoot</a> and follow those instruction from that documentation
+   
+2. Clone the repo
    ```sh
    git clone https://github.com/ingwerludwig/microservices-application.git
    ```
    
-2. Import Project
+3. Import Project
    File -> Import -> Existing Maven Project -> Navigate to the folder where you unzipped the zip
 
-3. If you want to running project only with docker container, go from step 7 and ignore step 3,4,5, and 6
-   If you want to develop app locally, you must initialize PostgreSQL Database and Redis first (docker-compose v2)
-   
+4. Initialize PostgreSQL Database and Redis first (docker-compose v2)
    ```sh
    docker-compose -f docker-compose-core-service.yml up -d order-db auth-db redis
    ```
 
-4. Refresh dependencies
+5. Refresh dependencies
    Right Click pom.xml -> Maven -> Reload Project
    
-5. Setup your env in application.properties
+6. Setup your env in application.properties
 
-6. Start SpringBoot Application Sequentially
+7. Start SpringBoot Application Sequentially
    - Discovery-Server
    - APIGateway
    - and other service as your wish
+
+
+## If you want to running project only with docker container, go from this step
      
-7. If you want to running project only with docker container, you must pull those image
+8. Pull all required image
    ```sh
    docker pull docker.elastic.co/elasticsearch/elasticsearch:5.6.8
    docker pull flaviostutz/dynomite:latest
@@ -79,13 +82,15 @@ First thing first, install <a href="https://docs.spring.io/spring-boot/docs/1.0.
    docker pull ingwerludwig/product-service
    ```
 
-   Then modify permission for shell file
+9. Then modify permission for shell file
    ```sh
    chmod +x workflow-engine-start.sh
+   ```
+   ```sh
    chmod +x core-service-start.sh
    ```
 
-   After that, run shell file sequentially
+10. After that, run shell file sequentially
    ```sh
    ./core-service-start.sh
    ```
