@@ -18,7 +18,7 @@ docker pull ingwerludwig/order-service
 docker pull ingwerludwig/payment-service
 docker pull ingwerludwig/product-service
 
-3. Import 
+3. From this repository, make sure this files are available on your local machine
 - docker-compose-core-service.yml
 - docker-compose-workflow-engine.yml
 - core-service-start.sh
@@ -29,10 +29,12 @@ chmod +x workflow-engine-start.sh
 chmod +x core-service-start.sh
 
 5. Run shell file
-./workflow-engine-start.sh
 ./core-service-start.sh
+./workflow-engine-start.sh
 
-— Notes : Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins) to make every service ready
+
+— Notes : Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins)
+to make every service ready and registered in Netflix Eureka Discovery Server and Spring Cloud Gateway
 
 UI Port
 http://localhost:8167 for Checking health and availability of All services
