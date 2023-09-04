@@ -149,7 +149,7 @@ Project Link: <a href="https://github.com/ingwerludwig/microservices-application
 [Spring-url]: https://spring.io/
 [Golang.com]: https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white
 [Golang-url]: https://go.dev
-[Docker-com]: https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white
+[Docker.com]: https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white
 [Docker-url]: https://www.docker.com
 [Apachekafka.com]: https://img.shields.io/badge/Apache%20Kafka-000?style=for-the-badge&logo=apachekafka
 [Apachekafka-url]: https://kafka.apache.org
