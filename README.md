@@ -1,6 +1,7 @@
 # About This Backend Microservice Project
 
 This microservices contains :
+
 ## Spring Boot Based
 - Discovery Server (use Netflix Eureka) <br>
 - API Gateway (use Spring Cloud) <br>
@@ -18,18 +19,15 @@ This microservices contains :
 * [![Golang][Golang.com]][Golang-url]
 * [![Netflix OSS][Netflix.com]][Netflix-url]
 
+
 # Tools we used
-
-## Storage
-* [![Redis][Redis.com]][Redis-url]
-* [![Apache Kafka][Apachekafka.com]][Apachekafka-url]
-* [![PostgreSQL][Postgre.com]][Postgre-url]
-* [![MongoDB][Mongo.com]][Mongo-url]
-* [![Dynomite][Dynomite.com]][Dynomite-url]
-
-## Containerization
-* [![Docker][Docker.com]][Docker-url]
-* [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]
+| Storage  | Containerization |
+| ------------- | ------------- |
+| * [![Redis][Redis.com]][Redis-url] | * [![Docker][Docker.com]][Docker-url]  |
+| * [![Apache Kafka][Apachekafka.com]][Apachekafka-url]  | * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]  |
+| * [![PostgreSQL][Postgre.com]][Postgre-url]  |  |
+| * [![MongoDB][Mongo.com]][Mongo-url]  |  |
+| * [![Dynomite][Dynomite.com]][Dynomite-url] |  |
 
 
 # Prerequisites
