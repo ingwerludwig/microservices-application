@@ -1,24 +1,24 @@
-## About This Backend Microservice Project
+# About This Backend Microservice Project
 
 This microservices contains :
-# Spring Boot Based
+## Spring Boot Based
 - Discovery Server (use Netflix Eureka) <br>
-- API Gateway (use Spring Cloud)<br>
-- AuthService<br>
-- ProductService<br>
+- API Gateway (use Spring Cloud) <br>
+- AuthService <br>
+- ProductService <br>
 - OrderService <br>
-- PaymentService<br>
+- PaymentService <br>
 
-# Golang Based
-Notification Service
-Invoice Service
+## Golang Based
+- Notification Service <br>
+- Invoice Service <br>
 
-### Tech Stack
+# Tech Stack
 * [![Spring][Spring.com]][Spring-url]
 * [![Golang][Golang.com]][Golang-url]
 * [![Netflix OSS][Netflix.com]][Netflix-url]
 
-### Tools we used
+# Tools we used
 
 ## Storage
 * [![Redis][Redis.com]][Redis-url]
@@ -32,14 +32,10 @@ Invoice Service
 * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]
 
 
-<!-- GETTING STARTED -->
-## Getting Started
-
-### Prerequisites
-
+# Prerequisites
 First thing first, install <a href="https://docs.spring.io/spring-boot/docs/1.0.2.RELEASE/reference/html/getting-started-installing-spring-boot.html">SpringBoot</a> and follow those instruction from that documentation
 
-### Installation
+# Installation
 
 1. Clone the repo
    ```sh
@@ -106,21 +102,12 @@ First thing first, install <a href="https://docs.spring.io/spring-boot/docs/1.0.
    http://localhost:5001 for Using Netflix Conductor UI <br>
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
+# Usage
 For more examples, please look to the <a href="">documentation</a>
 
-
-
-<!-- LICENSE -->
-## License
-
+# License
 Distributed under the MIT License.
 
-
-
-<!-- CONTACT -->
 ## Contact
 
 Ingwer Ludwig - ingwerflash@gmail.com
