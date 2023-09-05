@@ -135,7 +135,7 @@ Minimum RAM required for running All docker container is 5GB
    :8084 for Payment Service<br>
 
 # Usage
-For more examples, please look to the <a href="">documentation</a>
+For more examples, please look to the <a href="https://www.postman.com/myprivatepersonal/workspace/team-workspace">documentation</a> and use "dev" environment
 
 # License
 Distributed under the MIT License.
