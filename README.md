@@ -26,53 +26,57 @@ And also we use Netflix Technologies : <br>
 
 
 # Tools we used
-| Storage  | Containerization |
-| ------------- | ------------- |
-| * [![Redis][Redis.com]][Redis-url] | * [![Docker][Docker.com]][Docker-url]  |
-| * [![Apache Kafka][Apachekafka.com]][Apachekafka-url]  | * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]  |
-| * [![PostgreSQL][Postgre.com]][Postgre-url]  |  |
-| * [![MongoDB][Mongo.com]][Mongo-url]  |  |
-| * [![Dynomite][Dynomite.com]][Dynomite-url] |  |
+| Storage                                               | Containerization |
+|-------------------------------------------------------| ------------- |
+| * [![Redis][Redis.com]][Redis-url]                    | * [![Docker][Docker.com]][Docker-url]  |
+| * [![Apache Kafka][Apachekafka.com]][Apachekafka-url] | * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]  |
+| * [![PostgreSQL][Postgre.com]][Postgre-url]           |  |
+| * [![MongoDB][Mongo.com]][Mongo-url]                  |  |
+| * [![Dynomite][Dynomite.com]][Dynomite-url]           |  |
+| * [![ElasticSearch][ElasticSearch.com]][Dynomite-url]      |  |
 
-
+# Prerequisite
+Minimum RAM required for running All docker container is 5GB
+<br>
 # Installation
-## If you want to develop Spring Application, go from step 1-7 <br>
-## If you want to running project only with docker container, go from step 8-10 <br>
+- ### Please check your local port to avoid collisions with this microservices port that consist of [UI PORT](#ui), [Storage PORT](#storage), and [Services PORT](#service) <br>
+- ### If you want to develop Spring Application, go from [step 1-7](#step-1) <br>
+- ### If you want to running project only with docker container, go from [step 8-10](#step-8) <br> <br>
 
-1. Installation Java
+<a id="step-1"></a>
+### 1. Installation Java
    First thing first, install <a href="https://docs.spring.io/spring-boot/docs/1.0.2.RELEASE/reference/html/getting-started-installing-spring-boot.html">SpringBoot</a> and follow those instruction from that documentation
-   
-2. Clone the repo
-   ```sh
+   <br>
+### 2. Clone the repo
+   ```sh 
    git clone https://github.com/ingwerludwig/microservices-application.git
    ```
-   
-3. Import Project
+
+### <br> 3. Import Project
    File -> Import -> Existing Maven Project -> Navigate to the folder where you unzipped the zip
-
-4. Initialize PostgreSQL Database and Redis first (docker-compose v2)
+   <br><br>
+### 4. Only initialize PostgreSQL Database and Redis first (docker-compose v2)
    ```sh
-   docker-compose -f docker-compose-core-service.yml up -d order-db auth-db redis
+   chmod +x dev-core-service-start.sh
    ```
-
-5. Refresh dependencies
+   ```sh
+   ./dev-core-service-start.sh
+   ```
+### <br> 5. Refresh dependencies
    Right Click pom.xml -> Maven -> Reload Project
-   
-6. Setup your env in application.properties
-
-7. Start SpringBoot Application Sequentially
+### <br> 6. Setup your env in application.properties
+### <br> 7. Start SpringBoot Application Sequentially
    - Discovery-Server
    - APIGateway
-   - and other service as your wish
-
-
+   - then other service as your wish <br>
 ## If you want to running project only with docker container, go from this step
-     
-8. Pull all required image
+
+<a id="step-8"></a>
+### <br> 8. Pull all required image
    ```sh
-   docker pull docker.elastic.co/elasticsearch/elasticsearch:5.6.8
+   docker pull docker.elastic.co/elasticsearch/elasticsearch:6.8.15
    docker pull flaviostutz/dynomite:latest
-   docker pull flaviostutz/conductor-server
+   docker pull ccctechcenter/conductor:server-latest
    docker pull flaviostutz/conductor-ui
    docker pull confluentinc/cp-kafka
    docker pull confluentinc/cp-zookeeper
@@ -87,7 +91,7 @@ And also we use Netflix Technologies : <br>
    docker pull ingwerludwig/product-service
    ```
 
-9. Then modify permission for shell file
+### <br> 9. Then modify permission for shell file
    ```sh
    chmod +x workflow-engine-start.sh
    ```
@@ -95,20 +99,40 @@ And also we use Netflix Technologies : <br>
    chmod +x core-service-start.sh
    ```
 
-10. After that, run shell file sequentially
+### <br> 10. After that, run shell file sequentially
    ```sh
    ./core-service-start.sh
    ```
    ```sh
    ./workflow-engine-start.sh
    ```
-   Notes : Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins) <br>
-   to make every service ready and registered in Netflix Eureka Discovery Server and Spring Cloud Gateway <br>
+   ### Notes : 
+   Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins) to make every service ready and registered in Netflix Eureka Discovery Server and Spring Cloud Gateway <br>
 
-   UI Port <br>
-   http://localhost:8167 for Checking health and availability of All services <br>
+   <a id="ui"></a>
+   ### UI Port <br>
+   http://localhost:8167 for Using Netflix Eureka Discovery Server to check availability of All services<br>
    http://localhost:5001 for Using Netflix Conductor UI <br>
+   http://localhost:8000 for Using Netflix Conductor Server <br>
 
+   <a id="storage"></a>
+   ### Storage Port <br>
+   :2181 for Apache Zookeeper Confluent<br>
+   :9092 for Apache Kafka Confluent<br>
+   :5434 for PostgreSQL OrderDB<br>
+   :5433 for PostgreSQL AuthDB<br>
+   :6379 for Redis<br>
+   :8102 for Dynomite<br>
+   :9200 and :9300 for Elasticsearch<br>
+
+   <a id="service"></a>
+   ### Service Port <br>
+   :8000 for API Gateway<br>
+   :8080 for Netflix Conductor Server<br>
+   :8081 for Auth Service<br>
+   :8082 for Product Service<br>
+   :8083 for Order Service<br>
+   :8084 for Payment Service<br>
 
 # Usage
 For more examples, please look to the <a href="">documentation</a>
@@ -157,3 +181,5 @@ Project Link: <a href="https://github.com/ingwerludwig/microservices-application
 [Googlejib-url]: https://github.com/GoogleContainerTools/jib
 [Mongo.com]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
 [Mongo-url]: https://www.mongodb.com
+[ElasticSearch.com]: https://img.shields.io/badge/-ElasticSearch-005571?style=for-the-badge&logo=elasticsearch
+[ElasticSearch-url]: https://www.elastic.co

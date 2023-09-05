@@ -69,7 +69,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
     ports:
-      - "8080:8080"
+      - "8000:8000"
     depends_on:
       - discovery-server
 

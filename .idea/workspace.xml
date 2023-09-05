@@ -6,30 +6,37 @@
   <component name="ChangeListManager">
     <list default="true" id="1d67f7bd-2bae-44e3-8079-083b8ccbd301" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/1e697d6725e2ce66dac0d4bd1742af70f2bdb348aae814fa2c63746cb1956004" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/26f18ecf2956836e1bb56d4315c18eef386a56788203d43f442eeb8723e6420e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/2afe3e97e0acb7d56cd7203d1f529787507c6ec583d6363667133152a3354b71" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/javagrind/authservice/security/services/RedisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/javagrind/authservice/security/services/RedisService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/target/classes/com/javagrind/authservice/security/services/RedisService.class" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/target/classes/com/javagrind/authservice/security/services/RedisService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/layers/fd454775eaabb3c810046a658ffaca85ade853bf73ced6832fa007c2436ed826/070e93342a4c6aa6693a4768f4fa75bd84f7ebc03473ce1d1544c9a85db18e05" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/24e8365c7d21e247642d27e4cf98d3619acc06269ffbb6609cee9ccd85a1f7e3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/315bc342299fc2e747d2c32860df531c9590ff262ebd53b8004325782ff297bc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/f87f3456c804f2d6ca287ed66ad24bd8ff4c7f415264d129a017af11ba541fdd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.digest" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/target/jib-image.digest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.id" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/target/jib-image.id" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.json" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/target/jib-image.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/3b8ebc3a16734f9f6c8793a51d93f91a80d9723da019781d5d900cc903ff4de3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/bb4353d6cd5ce4e86eb54df7f2d772aef85f5030c5dfd935536a5ce8eeb46dce" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/fbbc201a3a3d0631fd8f538c7a3f3efd82a82829a3f38578c1cb9b8f01644c59" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/3a4470fe9f4de4d59cebf0af5d294fc3a95d07098f144984b063a188d81ae52e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/8e94b50a20bbeb92ed0c21f78f29bdf0765c38923e71306ced76805ca810bc31" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/eac208c556f2271d1e20c2e741bfd831f01ef436ea213e92c0ffda7a80d97da1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/5701206d361c204b25c89805c658dcfd43caa65bf59e908c51a5f971e2fefe37" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/70a479cd27cb1354e73646e6a10a8a91459766c338d4acd00d0b3b43d825b5d5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/db053ab9cd4022eef5a15d95acc0462d74d9d47fb58d1d9506caf79269c57ec5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/18e234dcf8a27cbb59d1e6b6b3502239b84ffbdaafd2659545f9b5fb88b6148c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/57e07c5f50befb76656faf9f4d1726d3dd34756c6020e980c871bcc3d1bc96b3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/afee54e363cb5f6af5cb1226a3a12df4cdc43f6c33dae471d53f669647a25576" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/layers/a09417d0ad5400b4748158a85016e57d2ea7ba2a544c0d983911b4bf65c03738/70e18d292c5a146e16865b454bbb371e121a65c16c28a2fa9217998a054c1762" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/14d211abb04b221666f56534ceaa747d4a26897f1c5b711a7a1f70cb9b9f65b9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/6cdf6fec54472f5b8728210df1e16f5550b6fdb595ea4e62a72377f85c64ce68" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-cache/selectors/eaa3c9b23bfaba8ed4493c54ca2a098571b184754d7c827b427f194e0809551e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-image.digest" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/jib-image.digest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-image.id" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/jib-image.id" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/target/jib-image.json" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/target/jib-image.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/78db279885034633bcd6e0802fc1c02590b9b2877f79f2aaaab8fd510a37f813" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/849ea59fada997d8eccd4ad12632b68ef365af9f61365236d3397be1bef409ce" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/acd6e8dc00aa7aecafcf2d0750dc0b3c06721f6306b7de3c9b4f3b4dfb3c79ae" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev-core-service-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/dev-core-service-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/47a51c31ccd6333f71aecb77098e090cea8fc4966f6ef61e5fce8d72b144bffd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/76c9f6332449e5c82fbbd4d50e656124535fe5887d1ae1da520016a133f39366" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-server/target/jib-cache/selectors/7e02a5e30a9fe3b18aa2a7a240f1af1704efdbb4b0834ef9d9ba33932c81df1f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-core-service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-core-service.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-workflow-engine.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-workflow-engine.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/5bc1f79f65fc41f7fc868ce947734a78ff88bd3b60c1808e1a8895fb75b70443" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/d197a93f0a0f361cee740d682fd5d050c57258a19f6841fd48a58d89a2046f32" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/target/jib-cache/selectors/d1d053b7b15b77c7dccdf5160ebab8ee9d8dc7fd58b5dec2a8df12cad838eaac" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/27f4c67e14a8147c5f4ba123d6c98fd715c486e23f2d2970157fc561a25172d3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/583a644636132033d8c153c21b658e560317c1e411454c9d9d6a17be0bfceea0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment-service/target/jib-cache/selectors/de071b08a9574e55f95480817f13688dc1a5a1115c7fc3bb847810088b43f4aa" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/3c80703a2217933eb0517565fd00ac76c7035ab337df0ab5940f96f4deca34a0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/485767ba784df9a7098429bf500db00a6d00882032f22a10d957bca8453dbe8b" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/target/jib-cache/selectors/ec3c6220164175cd1f5f707e4de8c5aea25accfe13a7fb24d92f11edac5e6dc2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workflow-engine-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/workflow-engine-start.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,6 +165,8 @@
       <workItem from="1693570026458" duration="1314000" />
       <workItem from="1693571749258" duration="544000" />
       <workItem from="1693823799565" duration="3282000" />
+      <workItem from="1693849471736" duration="2642000" />
+      <workItem from="1693888617620" duration="4924000" />
     </task>
     <servers />
   </component>
