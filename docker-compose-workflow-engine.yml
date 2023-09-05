@@ -1,8 +1,8 @@
 version: '2.3'
 name: netflix-conductor-workflow-engine
 networks:
-    microservice-core-service_default:
-        external: true
+  microservice-core-service_default:
+    external: true
 
 services:
 
@@ -16,15 +16,15 @@ services:
       - 5001:5000
     links:
       - conductor-server
-    
+
   conductor-server:
-    image: flaviostutz/conductor-server
+    image: ccctechcenter/conductor:server-latest
     environment:
       - CONFIG_PROP=config.properties
       - DYNOMITE_HOSTS= dynomite:8102:us-east-1c
       - ELASTICSEARCH_URL=elasticsearch:9200
     ports:
-      - 8089:8080
+      - 8080:8080
     networks:
       - microservice-core-service_default
     links:
@@ -47,9 +47,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 12
-    
+
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.8
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.15
     environment:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - transport.host=0.0.0.0

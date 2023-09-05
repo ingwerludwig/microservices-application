@@ -6,18 +6,16 @@ We use Spring Cloud Technology for API Gateway <br>
 And also we use Netflix Technologies : <br>
 - Discovery Server using Netflix Eureka <br>
 - Worfklow Engine for Orchestrating Microservices using Netflix Conductor <br>
+<br>
 
-## Spring Boot Based
-- Discovery Server (use Netflix Eureka) <br>
-- API Gateway (use Spring Cloud) <br>
-- AuthService <br>
-- ProductService <br>
-- OrderService <br>
-- PaymentService <br>
-
-## Golang Based
-- NotificationService <br>
-- InvoiceService <br>
+| Spring Boot Based           | Golang Based|
+|-----------------------------|--------------|
+| - Discovery Server (use Netflix Eureka)| - Notification Service|
+| - API Gateway (use Spring Cloud) | - Invoice Service |
+| - AuthService|              |
+| - ProductService       |              |
+| - OrderService |              |
+|- PaymentService |              |
 
 # Tech Stack
 * [![Spring][Spring.com]][Spring-url]
@@ -26,17 +24,21 @@ And also we use Netflix Technologies : <br>
 
 
 # Tools we used
-| Storage  | Containerization |
-| ------------- | ------------- |
-| * [![Redis][Redis.com]][Redis-url] | * [![Docker][Docker.com]][Docker-url]  |
-| * [![Apache Kafka][Apachekafka.com]][Apachekafka-url]  | * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]  |
-| * [![PostgreSQL][Postgre.com]][Postgre-url]  |  |
-| * [![MongoDB][Mongo.com]][Mongo-url]  |  |
-| * [![Dynomite][Dynomite.com]][Dynomite-url] |  |
+| Storage                                               | Containerization |
+|-------------------------------------------------------| ------------- |
+| * [![Redis][Redis.com]][Redis-url]                    | * [![Docker][Docker.com]][Docker-url]  |
+| * [![Apache Kafka][Apachekafka.com]][Apachekafka-url] | * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]  |
+| * [![PostgreSQL][Postgre.com]][Postgre-url]           |  |
+| * [![MongoDB][Mongo.com]][Mongo-url]                  |  |
+| * [![Dynomite][Dynomite.com]][Dynomite-url]           |  |
+| * [![ElasticSearch][ElasticSearch.com]][Dynomite-url]      |  |
 
-
+# Prerequisite
+Minimum RAM required for running All docker container is 5GB
+<br>
 # Installation
-   
+- ### Please check your local port to avoid collisions with this microservices port that consist of [UI PORT](#ui), [Storage PORT](#storage), and [Services PORT](#service) <br>
+
 1. Clone the repo
    ```sh
    git clone -b containerization https://github.com/ingwerludwig/microservices-application.git
@@ -44,9 +46,9 @@ And also we use Netflix Technologies : <br>
    
 2. Pull all required image
    ```sh
-   docker pull docker.elastic.co/elasticsearch/elasticsearch:5.6.8
+   docker pull docker.elastic.co/elasticsearch/elasticsearch:6.8.15
    docker pull flaviostutz/dynomite:latest
-   docker pull flaviostutz/conductor-server
+   docker pull ccctechcenter/conductor:server-latest
    docker pull flaviostutz/conductor-ui
    docker pull confluentinc/cp-kafka
    docker pull confluentinc/cp-zookeeper
@@ -76,16 +78,37 @@ And also we use Netflix Technologies : <br>
    ```sh
    ./workflow-engine-start.sh
    ```
-   Notes : Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins) <br>
-   to make every service ready and registered in Netflix Eureka Discovery Server and Spring Cloud Gateway <br>
+   ### Notes :
+   Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins) to make every service ready and registered in Netflix Eureka Discovery Server and Spring Cloud Gateway <br>
 
-   UI Port <br>
-   http://localhost:8167 for Checking health and availability of All services <br>
+   <a id="ui"></a>
+   ### UI Port <br>
+   http://localhost:8167 for Using Netflix Eureka Discovery Server to check availability of All services<br>
    http://localhost:5001 for Using Netflix Conductor UI <br>
+   http://localhost:8000 for Using Netflix Conductor Server <br>
+
+   <a id="storage"></a>
+   ### Storage Port <br>
+   :2181 for Apache Zookeeper Confluent<br>
+   :9092 for Apache Kafka Confluent<br>
+   :5434 for PostgreSQL OrderDB<br>
+   :5433 for PostgreSQL AuthDB<br>
+   :6379 for Redis<br>
+   :8102 for Dynomite<br>
+   :9200 and :9300 for Elasticsearch<br>
+
+   <a id="service"></a>
+   ### Service Port <br>
+   :8000 for API Gateway<br>
+   :8080 for Netflix Conductor Server<br>
+   :8081 for Auth Service<br>
+   :8082 for Product Service<br>
+   :8083 for Order Service<br>
+   :8084 for Payment Service<br>
 
 
 # Usage
-For more examples, please look to the <a href="">documentation</a>
+For more examples, please look to the <a href="https://www.postman.com/myprivatepersonal/workspace/team-workspace">documentation</a> and use "dev" environment
 
 # License
 Distributed under the MIT License.
@@ -131,3 +154,5 @@ Project Link: <a href="https://github.com/ingwerludwig/microservices-application
 [Googlejib-url]: https://github.com/GoogleContainerTools/jib
 [Mongo.com]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
 [Mongo-url]: https://www.mongodb.com
+[ElasticSearch.com]: https://img.shields.io/badge/-ElasticSearch-005571?style=for-the-badge&logo=elasticsearch
+[ElasticSearch-url]: https://www.elastic.co
