@@ -60,7 +60,7 @@ Minimum RAM required for running All docker container is 5GB
    ./dev-core-service-start.sh
    ```
 ### <br> 5. Refresh dependencies
-   Right Click pom.xml -> Maven -> Reload Project
+   Right Click project directory -> Maven -> Reload Project
 ### <br> 6. Setup your env in application.properties
 ### <br> 7. Start SpringBoot Application Sequentially
    - Discovery-Server
