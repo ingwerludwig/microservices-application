@@ -6,18 +6,16 @@ We use Spring Cloud Technology for API Gateway <br>
 And also we use Netflix Technologies : <br>
 - Discovery Server using Netflix Eureka <br>
 - Worfklow Engine for Orchestrating Microservices using Netflix Conductor <br>
+<br>
 
-## Spring Boot Based
-- Discovery Server (use Netflix Eureka) <br>
-- API Gateway (use Spring Cloud) <br>
-- AuthService <br>
-- ProductService <br>
-- OrderService <br>
-- PaymentService <br>
-
-## Golang Based
-- Notification Service <br>
-- Invoice Service <br>
+| Spring Boot Based           | Golang Based|
+|-----------------------------|--------------|
+| - Discovery Server (use Netflix Eureka)| - Notification Service|
+| - API Gateway (use Spring Cloud) | - Invoice Service |
+| - AuthService|              |
+| - ProductService       |              |
+| - OrderService |              |
+|- PaymentService |              |
 
 # Tech Stack
 * [![Spring][Spring.com]][Spring-url]
