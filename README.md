@@ -30,7 +30,7 @@ And also we use Netflix Technologies : <br>
 | * [![Apache Kafka][Apachekafka.com]][Apachekafka-url] | * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]  |
 | * [![PostgreSQL][Postgre.com]][Postgre-url]           |  |
 | * [![MongoDB][Mongo.com]][Mongo-url]                  |  |
-| * [![ElasticSearch][ElasticSearch.com]][ElastiSearch-url]      |  |
+| * [![ElasticSearch][ElasticSearch.com]][ElasticSearch-url]      |  |
 
 # Prerequisite
 Minimum RAM required for running All docker container is 5GB
