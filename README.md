@@ -30,7 +30,6 @@ And also we use Netflix Technologies : <br>
 | * [![Apache Kafka][Apachekafka.com]][Apachekafka-url] | * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]  |
 | * [![PostgreSQL][Postgre.com]][Postgre-url]           |  |
 | * [![MongoDB][Mongo.com]][Mongo-url]                  |  |
-| * [![Dynomite][Dynomite.com]][Dynomite-url]           |  |
 | * [![ElasticSearch][ElasticSearch.com]][Dynomite-url]      |  |
 
 # Prerequisite
@@ -73,7 +72,6 @@ Minimum RAM required for running All docker container is 5GB
 ### <br> 8. Pull all required image
    ```sh
    docker pull docker.elastic.co/elasticsearch/elasticsearch:6.8.15
-   docker pull flaviostutz/dynomite:latest
    docker pull ccctechcenter/conductor:server-latest
    docker pull flaviostutz/conductor-ui
    docker pull confluentinc/cp-kafka
@@ -120,7 +118,6 @@ Minimum RAM required for running All docker container is 5GB
    :5434 for PostgreSQL OrderDB<br>
    :5433 for PostgreSQL AuthDB<br>
    :6379 for Redis<br>
-   :8102 for Dynomite<br>
    :9200 and :9300 for Elasticsearch<br>
 
    <a id="service"></a>
