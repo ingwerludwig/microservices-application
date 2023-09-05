@@ -110,8 +110,8 @@ Minimum RAM required for running All docker container is 5GB
    <a id="ui"></a>
    ### UI Port <br>
    http://localhost:8167 for Using Netflix Eureka Discovery Server to check availability of All services<br>
-   http://localhost:5001 for Using Netflix Conductor UI <br>
-   http://localhost:8000 for Using Netflix Conductor Server <br>
+   http://localhost:5000 for Using Netflix Conductor UI <br>
+   http://localhost:8080 for Using Netflix Conductor Server <br>
 
    <a id="storage"></a>
    ### Storage Port <br>
