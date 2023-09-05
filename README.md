@@ -30,8 +30,7 @@ And also we use Netflix Technologies : <br>
 | * [![Apache Kafka][Apachekafka.com]][Apachekafka-url] | * [![Google Container Tools - Jib][Googlejib.com]][Googlejib-url]  |
 | * [![PostgreSQL][Postgre.com]][Postgre-url]           |  |
 | * [![MongoDB][Mongo.com]][Mongo-url]                  |  |
-| * [![Dynomite][Dynomite.com]][Dynomite-url]           |  |
-| * [![ElasticSearch][ElasticSearch.com]][Dynomite-url]      |  |
+| * [![ElasticSearch][ElasticSearch.com]][ElastiSearch-url]      |  |
 
 # Prerequisite
 Minimum RAM required for running All docker container is 5GB
@@ -47,7 +46,6 @@ Minimum RAM required for running All docker container is 5GB
 2. Pull all required image
    ```sh
    docker pull docker.elastic.co/elasticsearch/elasticsearch:6.8.15
-   docker pull flaviostutz/dynomite:latest
    docker pull ccctechcenter/conductor:server-latest
    docker pull flaviostutz/conductor-ui
    docker pull confluentinc/cp-kafka
@@ -84,8 +82,8 @@ Minimum RAM required for running All docker container is 5GB
    <a id="ui"></a>
    ### UI Port <br>
    http://localhost:8167 for Using Netflix Eureka Discovery Server to check availability of All services<br>
-   http://localhost:5001 for Using Netflix Conductor UI <br>
-   http://localhost:8000 for Using Netflix Conductor Server <br>
+   http://localhost:5000 for Using Netflix Conductor UI <br>
+   http://localhost:8080 for Using Netflix Conductor Server <br>
 
    <a id="storage"></a>
    ### Storage Port <br>
@@ -94,7 +92,6 @@ Minimum RAM required for running All docker container is 5GB
    :5434 for PostgreSQL OrderDB<br>
    :5433 for PostgreSQL AuthDB<br>
    :6379 for Redis<br>
-   :8102 for Dynomite<br>
    :9200 and :9300 for Elasticsearch<br>
 
    <a id="service"></a>
