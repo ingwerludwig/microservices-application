@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d67f7bd-2bae-44e3-8079-083b8ccbd301" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/api-gateway.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/auth-service.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-server/discovery-server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-workflow-engine.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-workflow-engine.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/order-service.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment-service/payment-service.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/product-service.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/5e647bb93281a4ce5a83f06fe0f8270882558182dccc68405e74d3de134f27df" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/a69416b7b50484b4bf3342a09e0e47142a2654c4a41859f3d39ce338a35528e9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-cache/selectors/f9fda91562645ded532616a70ba3f9dfa8e4c1c7e554fec3b45abf1cce6503ff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.digest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.id" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/target/jib-image.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +61,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;747245cb7af699585124d488289d0696&quot;
+    &quot;spring.configuration.checksum&quot;: &quot;588987b33aa2d163d71eed03cb97dab0&quot;
   }
 }</component>
   <component name="RunDashboard">
@@ -148,10 +142,7 @@
       <workItem from="1693823799565" duration="3282000" />
       <workItem from="1693849471736" duration="2642000" />
       <workItem from="1693888617620" duration="6669000" />
-      <workItem from="1693912623093" duration="1059000" />
-      <workItem from="1693987573859" duration="3738000" />
-      <workItem from="1694271494216" duration="1707000" />
-      <workItem from="1694329818578" duration="138000" />
+      <workItem from="1694330392180" duration="310000" />
     </task>
     <servers />
   </component>
