@@ -10,8 +10,8 @@
         <module name="api-gateway" />
         <module name="product-service" />
         <module name="auth-service" />
-        <module name="payment-service" />
         <module name="order-service" />
+        <module name="payment-service" />
         <module name="discovery-server" />
       </profile>
     </annotationProcessing>
