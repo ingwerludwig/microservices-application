@@ -71,9 +71,9 @@ Minimum RAM required for running All docker container is 5GB
 <a id="step-8"></a>
 ### <br> 8. Pull all required image
    ```sh
-   docker pull docker.elastic.co/elasticsearch/elasticsearch:6.8.15
-   docker pull ccctechcenter/conductor:server-latest
-   docker pull flaviostutz/conductor-ui
+   docker pull webhippie/elasticsearch:6.8
+   docker pull ingwerludwig/conductor-server:latest
+   docker pull ingwerludwig/conductor-ui:latest
    docker pull confluentinc/cp-kafka
    docker pull confluentinc/cp-zookeeper
    docker pull redis
