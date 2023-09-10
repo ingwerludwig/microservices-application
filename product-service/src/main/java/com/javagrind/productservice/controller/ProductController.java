@@ -3,7 +3,6 @@ package com.javagrind.productservice.controller;
 import com.javagrind.productservice.dto.Response;
 import com.javagrind.productservice.dto.request.*;
 import com.javagrind.productservice.entity.ProductEntity;
-import com.javagrind.productservice.handler.GlobalExceptionHandler;
 import com.javagrind.productservice.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -51,6 +49,39 @@ public class ProductController {
         ProductEntity updatedProduct = productService.update(id, request);
         Response<ProductEntity> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update product successfully", updatedProduct);
         return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping("/increaseStock")
+    public ResponseEntity<Response<ProductEntity>> increaseStock(@RequestParam String id, @RequestBody ModifyStockProductRequest request, BindingResult errors){
+        FindProductByIdRequest findRequest = new FindProductByIdRequest();
+            findRequest.setProductId(id);
+        ProductEntity result = productService.findProductById(findRequest);;
+
+        UpdateProductRequest updateRequest = new UpdateProductRequest();
+        updateRequest.setAmounts(result.getAmounts()+request.getAmounts());
+
+        ProductEntity updatedProduct = productService.update(id, updateRequest);
+        Response<ProductEntity> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update product successfully", updatedProduct);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping("/decreaseStock")
+    public ResponseEntity<Response<ProductEntity>> decreaseStock(@RequestParam String id, @RequestBody ModifyStockProductRequest request, BindingResult errors){
+        FindProductByIdRequest findRequest = new FindProductByIdRequest();
+                               findRequest.setProductId(id);
+        ProductEntity result = productService.findProductById(findRequest);;
+
+        UpdateProductRequest updateRequest = new UpdateProductRequest();
+        updateRequest.setAmounts(result.getAmounts()-request.getAmounts());
+
+        if(updateRequest.getAmounts()<0){
+            Response<ProductEntity> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.TRUE, "Product Stock not sufficient", null);
+            return ResponseEntity.internalServerError().body(response);
+        }else{
+            ProductEntity updatedProduct = productService.update(id, updateRequest);
+            Response<ProductEntity> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update product successfully", updatedProduct);
+            return ResponseEntity.ok().body(response);
+        }
     }
 
     @PutMapping("/delete")
