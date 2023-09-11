@@ -46,6 +46,13 @@ public class OrderController {
         return ResponseEntity.status(httpStatus).body(result);
     }
 
+    @GetMapping("/getOrderById")
+    public ResponseEntity<Response<OrderEntity>> findOrderById(@RequestParam String orderId){
+        Response<OrderEntity> result = orderService.findOrderById(orderId);
+        HttpStatus httpStatus = HttpStatus.valueOf(result.getStatusCode());
+        return ResponseEntity.status(httpStatus).body(result);
+    }
+
 
     @PutMapping("/update")
     public ResponseEntity<Response<OrderEntity>> updateOrder(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request){

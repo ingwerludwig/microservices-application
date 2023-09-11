@@ -75,7 +75,7 @@ public class ProductController {
         updateRequest.setAmounts(result.getAmounts()-request.getAmounts());
 
         if(updateRequest.getAmounts()<0){
-            Response<ProductEntity> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.TRUE, "Product Stock not sufficient", null);
+            Response<ProductEntity> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE, "Product Stock not sufficient", null);
             return ResponseEntity.internalServerError().body(response);
         }else{
             ProductEntity updatedProduct = productService.update(id, updateRequest);

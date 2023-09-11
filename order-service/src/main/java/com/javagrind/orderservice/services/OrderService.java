@@ -17,5 +17,7 @@ public interface OrderService {
 
     Response<List<OrderEntity>> findOrder(FindOrderRequest request);
 
+    Response<OrderEntity> findOrderById(String orderId);
+
     Response<OrderEntity> update(String orderId, String userId, UpdateOrderRequest request);
 }

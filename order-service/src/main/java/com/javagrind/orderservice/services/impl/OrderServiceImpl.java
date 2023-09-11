@@ -86,6 +86,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Response<OrderEntity> findOrderById(String orderId) {
+        Optional<OrderEntity> requestedOrder = orderRepository.findById(orderId);
+
+        if (requestedOrder.isPresent() && requestedOrder.get().getId().equals(orderId)){
+            OrderEntity requestedEntity = requestedOrder.get();
+            LOGGER.info("Order has been found \n" + requestedEntity+ "\n");
+            return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", requestedEntity);
+
+        }else{
+            LOGGER.error("Order failed to updated \n" + "Order Not Found" + "\n");
+            return new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, "Order Not Found", null);
+        }
+    }
+
+    @Override
     @Transactional
     @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallbackUpdateOrder")
     public Response<OrderEntity> update(String orderId, String userId, UpdateOrderRequest request) {
