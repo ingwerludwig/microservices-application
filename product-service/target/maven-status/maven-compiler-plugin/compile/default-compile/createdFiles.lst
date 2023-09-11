@@ -5,6 +5,7 @@ com/javagrind/productservice/controller/ProductController.class
 com/javagrind/productservice/dto/request/CreateProductRequest.class
 com/javagrind/productservice/dao/ProductDao.class
 com/javagrind/productservice/entity/ProductEntity.class
+com/javagrind/productservice/dto/request/ModifyStockProductRequest.class
 com/javagrind/productservice/dto/request/FindProductRequest.class
 com/javagrind/productservice/config/KafkaConfig.class
 com/javagrind/productservice/service/impl/ProductServiceImpl.class
