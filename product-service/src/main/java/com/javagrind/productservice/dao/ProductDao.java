@@ -15,11 +15,12 @@ import org.springframework.stereotype.Component;
 public class ProductDao {
     private final MongoTemplate mongoTemplate;
 
-    public Long updateById(String id, UpdateProductRequest request) {
-        Update update = new Update().set("productName", request.getProductName())
-                .set("price", request.getPrice())
-                .set("description", request.getDescription())
-                .set("amounts", request.getAmounts());
+    public Long updateById(String id, UpdateProductRequest request, ProductEntity requestedProduct) {
+        Update update = new Update()
+                .set("productName", ((request.getProductName() == null) ?  requestedProduct.getProductName() : request.getProductName()))
+                .set("price", ((request.getPrice() == null) ?  requestedProduct.getPrice() : request.getPrice()))
+                .set("description", ((request.getDescription() == null) ?  requestedProduct.getDescription() : request.getDescription()))
+                .set("amounts", ((request.getAmounts() == null) ?  requestedProduct.getAmounts() : request.getAmounts()));
 
         UpdateResult result = mongoTemplate.updateFirst(
                 Query.query(Criteria.where("_id").is(id)),

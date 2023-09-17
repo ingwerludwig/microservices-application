@@ -4,7 +4,6 @@ import com.javagrind.productservice.dto.Response;
 import com.javagrind.productservice.dto.request.*;
 import com.javagrind.productservice.entity.ProductEntity;
 import com.javagrind.productservice.service.ProductService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.logging.Logger;
 

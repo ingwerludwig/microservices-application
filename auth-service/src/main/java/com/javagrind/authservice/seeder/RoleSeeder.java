@@ -2,9 +2,9 @@ package com.javagrind.authservice.seeder;
 import com.javagrind.authservice.entity.Role;
 import com.javagrind.authservice.entity.RolesEntity;
 import com.javagrind.authservice.repositories.RoleRepository;
-
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class RoleSeeder {

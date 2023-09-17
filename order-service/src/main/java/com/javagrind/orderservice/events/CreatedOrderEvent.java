@@ -5,12 +5,13 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class CreatedOrderEvent {
-    private String id;
+    private UUID id;
     private String productId;
     private String user_id;
     private String productName;

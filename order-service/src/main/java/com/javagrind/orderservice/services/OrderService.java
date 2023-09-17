@@ -1,23 +1,21 @@
 package com.javagrind.orderservice.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.javagrind.orderservice.dto.Response;
-import com.javagrind.orderservice.dto.request.Order.CreateOrderRequest;
-import com.javagrind.orderservice.dto.request.Order.FindOrderRequest;
-import com.javagrind.orderservice.dto.request.Order.UpdateOrderRequest;
+import com.javagrind.orderservice.dto.request.CreateOrderRequest;
+import com.javagrind.orderservice.dto.request.FindOrderRequest;
+import com.javagrind.orderservice.dto.request.UpdateOrderRequest;
 import com.javagrind.orderservice.entity.OrderEntity;
-import com.javagrind.orderservice.serviceClient.ProductServiceClient.ProductDao;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface OrderService {
 
-    CompletableFuture<Response<OrderEntity>> create(CreateOrderRequest request) throws JsonProcessingException;
+    CompletableFuture<OrderEntity> create(CreateOrderRequest request) throws Exception;
 
-    Response<List<OrderEntity>> findOrder(FindOrderRequest request);
+    CompletableFuture<List<OrderEntity>> findOrderByUserId(FindOrderRequest request);
 
-    Response<OrderEntity> findOrderById(String orderId);
+    CompletableFuture<OrderEntity> findOrderById(String orderId);
 
-    Response<OrderEntity> update(String orderId, String userId, UpdateOrderRequest request);
+    CompletableFuture<OrderEntity> update(String orderId, String userId, UpdateOrderRequest request);
 }

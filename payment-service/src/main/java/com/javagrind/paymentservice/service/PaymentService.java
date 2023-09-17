@@ -9,6 +9,6 @@ import com.javagrind.paymentservice.dto.UpdateOrderDao;
 import reactor.core.publisher.Mono;
 
 public interface PaymentService {
-    Mono<Response<PaymentResponse>> pay(MidtransChargeRequest request) throws JsonProcessingException;
+    Mono<Response<PaymentResponse>> pay(MidtransChargeRequest request) throws Exception;
     Mono<Response<UpdateOrderDao>> notify(MidtransWebhookRequest request);
 }

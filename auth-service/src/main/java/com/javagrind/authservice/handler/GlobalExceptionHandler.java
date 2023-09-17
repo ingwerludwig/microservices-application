@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
@@ -25,6 +26,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpClientErrorException.BadRequest.class)
+    public static ResponseEntity<Response<Object>> handleHttpBadRequest(Errors errors) {
+
+        String errorMessages = errors.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining("; "));
+        response = new Response<>(HttpStatus.BAD_REQUEST.value(), Boolean.FALSE, errorMessages, null);
+        System.err.println(errorMessages);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public static ResponseEntity<Response<Object>> handleBadRequest(Errors errors) {
 
         String errorMessages = errors.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining("; "));
@@ -39,8 +49,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
-    @ExceptionHandler(JwtException.class)
-    public static ResponseEntity<Response<Object>> handleJWTException(JwtException ex) {
+    @ExceptionHandler(io.jsonwebtoken.JwtException.class)
+    public static ResponseEntity<Response<Object>> handleJWTException(Exception ex) {
         response = new Response<>(HttpStatus.UNAUTHORIZED.value(), Boolean.FALSE, ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
@@ -76,7 +86,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public static ResponseEntity<Response<Object>> handleNoSuchElementException(IllegalArgumentException ex) {
+    public static ResponseEntity<Response<Object>> handleNoSuchElementException(Exception ex) {
         response = new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }

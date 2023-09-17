@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional()
-    public UserEntity update(String id,UpdateUserRequest request) {
+    public UserEntity update(UUID id, UpdateUserRequest request) {
 
         UserEntity requestedUser = userRepository.findUserById(id);
         if(requestedUser != null) {

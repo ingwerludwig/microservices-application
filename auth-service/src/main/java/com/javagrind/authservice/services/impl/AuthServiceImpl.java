@@ -55,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Object validate(String jwt){
         if (jwt != null && jwtUtils.validateJwtToken(jwt) && redisService.isThere((String)jwtUtils.getUserNameFromJwtToken(jwt) )!=null)
-            return new TokenResponse(jwt,jwtUtils.getUserNameFromJwtToken(jwt),new Timestamp(jwtUtils.getExpiredAt(jwt)));
+            return new TokenResponse(jwt,jwtUtils.getUserNameFromJwtToken(jwt),new Timestamp(jwtUtils.getExpiredAt(jwt).getTime()));
         else
             throw new JwtException("JWT not valid");
     }

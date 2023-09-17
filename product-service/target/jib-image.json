@@ -1,1 +1,1 @@
-{"image":"registry.hub.docker.com/ingwerludwig/product-service","imageId":"sha256:8632666d4f1054e7dbc348dd34e3e1961ba875dcd0977e28ce265c64b255cc53","imageDigest":"sha256:eb59b6673af7962481b32f2c14d4772c43da6ef508e321c7ae6db6d3fdf139ec","tags":["latest"],"imagePushed":true}
+{"image":"registry.hub.docker.com/ingwerludwig/product-service","imageId":"sha256:cf396815bf82cf5fbe4d1463c4fcf078904baed19e3c5919f78bfc2fe113a2d2","imageDigest":"sha256:15ba8ca9e907e8bb09a6c1b82f9b71f11749e91c26a0e2cf81995cf16fc97620","tags":["latest"],"imagePushed":true}

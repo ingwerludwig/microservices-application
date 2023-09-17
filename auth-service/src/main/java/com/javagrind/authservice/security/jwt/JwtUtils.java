@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
 
@@ -25,19 +26,26 @@ public class JwtUtils {
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        Date expiration = new Date(System.currentTimeMillis() + jwtExpirationMs);
+        System.err.println(expiration);
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getEmail()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
-    public Long getExpiredAt(String token){
-        String[] parts = token.split("\\.");
-        JSONObject payload = new JSONObject(decode(parts[1]));
-        return payload.getLong("exp");
+    public Date getExpiredAt(String token){
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        // Extract and print the "exp" claim (expiration time)
+        Date expirationDate = claims.getExpiration();
+        return expirationDate;
     }
 
     private String decode(String encodedString) {

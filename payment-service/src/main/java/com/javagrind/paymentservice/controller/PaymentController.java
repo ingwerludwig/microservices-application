@@ -21,7 +21,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping("/pay")
-    public Mono<ResponseEntity<Response<PaymentResponse>>> createPayment(@Valid @RequestBody MidtransChargeRequest request) throws JsonProcessingException {
+    public Mono<ResponseEntity<Response<PaymentResponse>>> createPayment(@Valid @RequestBody MidtransChargeRequest request) throws Exception {
         return paymentService.pay(request)
                 .map(paymentResponse -> ResponseEntity.status(paymentResponse.getStatusCode())
                                                       .body(paymentResponse));

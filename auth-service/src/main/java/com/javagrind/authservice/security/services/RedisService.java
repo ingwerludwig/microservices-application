@@ -8,6 +8,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisException;
 
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class RedisService {
@@ -32,8 +34,10 @@ public class RedisService {
             String token = jedis.get(email);
 
             if (token != null) {
-                Long expDate = jwtUtils.getExpiredAt(token);
+                Long expDate = jwtUtils.getExpiredAt(token).getTime();
                 Long dateNow = (System.currentTimeMillis() / 1000);
+                System.err.println("expDate : " + expDate);
+                System.err.println("dateNow : " + dateNow);
 
                 if ((expDate > dateNow) && jwtUtils.validateJwtToken(token))
                     return Boolean.TRUE;

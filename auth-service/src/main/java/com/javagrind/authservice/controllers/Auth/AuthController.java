@@ -7,13 +7,13 @@ import com.javagrind.authservice.dto.request.User.RegisterRequest;
 import com.javagrind.authservice.entity.UserEntity;
 import com.javagrind.authservice.services.AuthService;
 import com.javagrind.authservice.services.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

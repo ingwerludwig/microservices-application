@@ -7,7 +7,7 @@ import com.javagrind.paymentservice.dto.Request.MidtransPaymentRequest.MidtransW
 import com.javagrind.paymentservice.dto.Response;
 import com.javagrind.paymentservice.dto.UpdateOrderDao;
 import com.javagrind.paymentservice.service.PaymentService;
-import com.javagrind.paymentservice.serviceClient.MidtransServiceClient;
+import com.javagrind.paymentservice.serviceClient.MidtransServiceClientImpl;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +22,14 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
-    private final MidtransServiceClient midtransServiceClient;
+    private final MidtransServiceClientImpl midtransServiceClient;
 
     private static final Logger LOGGER = LogManager.getLogger(PaymentServiceImpl.class);
 
     @Override
     @CircuitBreaker(name = "Payment-Service", fallbackMethod = "fallbackPayment")
     @TimeLimiter(name = "Payment-Service")
-    public Mono<Response<PaymentResponse>> pay(MidtransChargeRequest request) throws JsonProcessingException {
+    public Mono<Response<PaymentResponse>> pay(MidtransChargeRequest request) throws Exception {
         return midtransServiceClient.charge(request)
                 .flatMap(midtransResponse -> {
                     PaymentResponse paymentResponse = new PaymentResponse(LocalDateTime.now(), midtransResponse.getPayment_url());

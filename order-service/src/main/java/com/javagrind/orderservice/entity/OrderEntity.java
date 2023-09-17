@@ -1,12 +1,15 @@
 package com.javagrind.orderservice.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -18,9 +21,10 @@ import java.time.LocalDateTime;
 )
 public class OrderEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "order_id", updatable = false)
-    private String id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "order_id",columnDefinition = "UUID", updatable = false)
+    private UUID id;
 
     @Column(name = "product_id", updatable = false)
     private String productId;
@@ -34,7 +38,7 @@ public class OrderEntity {
     @Column(name = "description", updatable = false)
     private String description;
 
-    @Column(name = "amounts", updatable = false)
+    @Column(name = "amounts")
     private Long amounts;
 
     @Column(name = "price")

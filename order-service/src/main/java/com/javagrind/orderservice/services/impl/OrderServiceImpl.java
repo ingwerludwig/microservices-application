@@ -1,16 +1,11 @@
 package com.javagrind.orderservice.services.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javagrind.orderservice.dto.Response;
-import com.javagrind.orderservice.dto.request.Order.CreateOrderRequest;
-import com.javagrind.orderservice.dto.request.Order.FindOrderRequest;
-import com.javagrind.orderservice.dto.request.Order.UpdateOrderRequest;
+import com.javagrind.orderservice.dto.request.CreateOrderRequest;
+import com.javagrind.orderservice.dto.request.FindOrderRequest;
+import com.javagrind.orderservice.dto.request.UpdateOrderRequest;
 import com.javagrind.orderservice.entity.OrderEntity;
 import com.javagrind.orderservice.events.CreatedOrderEvent;
 import com.javagrind.orderservice.repositories.OrderRepository;
-import com.javagrind.orderservice.serviceClient.ProductServiceClient.ProductDao;
-import com.javagrind.orderservice.serviceClient.ProductServiceClient.ProductServiceClient;
 import com.javagrind.orderservice.services.OrderService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
@@ -19,11 +14,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -32,7 +27,6 @@ import java.util.concurrent.CompletableFuture;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
-    private final ProductServiceClient productServiceClient;
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
@@ -41,122 +35,120 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallbackOrder")
     @TimeLimiter(name = "Order-Service")
-    public CompletableFuture<Response<OrderEntity>> create(CreateOrderRequest request){
-        CompletableFuture<Response<ProductDao>> service =
-                CompletableFuture.supplyAsync(() -> {
-                    try   {return productServiceClient.findProduct(request.getProductId());}
-                    catch (JsonProcessingException e) {throw new RuntimeException(e);}
-                });
-
-        return service.thenApplyAsync(result -> {
-            if (result.getStatusCode() == HttpStatus.OK.value() && result.getData() != null) {
-                ProductDao dataObject = result.getData();
-                OrderEntity newOrder = new OrderEntity(dataObject.getId(), request.getUserId(), dataObject.getProductName(), request.getDescription(), request.getAmounts(), dataObject.getPrice() * request.getAmounts());
+    public CompletableFuture<OrderEntity> create(CreateOrderRequest request) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Long totalPrice = request.getPrice() * request.getAmounts();
+                OrderEntity newOrder = new OrderEntity(request.getProductId(), request.getUserId(), request.getProductName(), request.getDescription(), request.getAmounts(), totalPrice);
                 orderRepository.save(newOrder);
 
                 CreatedOrderEvent event = modelMapper.map(newOrder, CreatedOrderEvent.class);
                 kafkaTemplate.send("order-topic", (Object) event);
 
-                LOGGER.info("Order has been created \n" + newOrder+ "\n");
-                return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Create order successfully", newOrder);
-
-            }else if(result.getStatusCode() == HttpStatus.NOT_FOUND.value() && result.getData() == null) {
-                LOGGER.info("Order failed to created \n" + result.getMessage() + "\n");
-                return new Response<>(result.getStatusCode(), result.getSuccess(), result.getMessage(), null);
-
-            }else{
-                throw new RuntimeException(result.getMessage());
+                LOGGER.info("Order has been created \n" + newOrder + "\n");
+                return newOrder;
+            } catch (Exception ex) {
+                throw new RuntimeException(ex.getMessage() + "caused by : " + ex.getCause());
             }
         });
     }
+    public CompletableFuture<OrderEntity> fallbackOrder(CreateOrderRequest request, Throwable e) {
+        LOGGER.error("Create Order failed: " + e.getMessage());
+        String errorMessage = "Create Order failed, try again later. Error caused : " + e.getMessage();
+
+        CompletableFuture<OrderEntity> fallbackResponse = new CompletableFuture<>();
+        fallbackResponse.completeExceptionally(new RuntimeException(errorMessage));
+
+        return fallbackResponse;
+    }
+
 
     @Override
     @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallbackListOrder")
-    public Response<List<OrderEntity>> findOrder(FindOrderRequest request) {
-        Optional<List<OrderEntity>> result = orderRepository.findByUserId(request.getUserId());
-
-        if (Boolean.TRUE.equals(result.map(products -> !products.isEmpty()))) {
-            LOGGER.info("Order has been found \n" + result+ "\n");
-            return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", result.get());
-
-        }else {
-            LOGGER.error("Order failed to created \n" + result + "\n");
-            return new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, "Order Not Found", null);
-        }
+    @TimeLimiter(name = "Order-Service")
+    public CompletableFuture<List<OrderEntity>> findOrderByUserId(FindOrderRequest request) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Optional<List<OrderEntity>> result = orderRepository.findByUserId(request.getUserId());
+                if (Boolean.TRUE.equals(result.map(products -> !products.isEmpty()))) {
+                    LOGGER.info("Order has been found \n" + result + "\n");
+                    return result.get();
+                }
+            } catch (Exception ex) {
+                throw new RuntimeException(ex.getMessage() + "caused by : " + ex.getCause());
+            }
+            return null;
+        });
     }
+    public CompletableFuture<List<OrderEntity>> fallbackListOrder(FindOrderRequest request, Throwable e) {
+        LOGGER.error("Get Order failed: " + e.getMessage());
+        String errorMessage = "Get Order failed, try again later. Error caused : " + e.getMessage();
+
+        CompletableFuture<List<OrderEntity>> fallbackResponse = new CompletableFuture<>();
+        fallbackResponse.completeExceptionally(new RuntimeException(errorMessage));
+
+        return fallbackResponse;
+    }
+
 
     @Override
-    public Response<OrderEntity> findOrderById(String orderId) {
-        Optional<OrderEntity> requestedOrder = orderRepository.findById(orderId);
-
-        if (requestedOrder.isPresent() && requestedOrder.get().getId().equals(orderId)){
-            OrderEntity requestedEntity = requestedOrder.get();
-            LOGGER.info("Order has been found \n" + requestedEntity+ "\n");
-            return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", requestedEntity);
-
-        }else{
-            LOGGER.error("Order failed to updated \n" + "Order Not Found" + "\n");
-            return new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, "Order Not Found", null);
-        }
+    @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallbackGetOrder")
+    @TimeLimiter(name = "Order-Service")
+    public CompletableFuture<OrderEntity> findOrderById(String orderId) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Optional<OrderEntity> requestedOrder = orderRepository.findById(orderId);
+                if (requestedOrder.isPresent() && requestedOrder.get().getId().equals(orderId)){
+                    OrderEntity requestedEntity = requestedOrder.get();
+                    LOGGER.info("Order has been found \n" + requestedEntity+ "\n");
+                    return requestedEntity;
+                }
+            } catch (Exception ex) {
+                throw new NoSuchElementException(ex.getMessage() + "caused by : " + ex.getCause());
+            }
+            return null;
+        });
     }
+    public CompletableFuture<OrderEntity> fallbackGetOrder(String orderId, Throwable e) {
+        LOGGER.error("Get Order failed: " + e.getMessage());
+        String errorMessage = "Get Order failed, try again later. Error caused : " + e.getMessage();
+
+        CompletableFuture<OrderEntity> fallbackResponse = new CompletableFuture<>();
+        fallbackResponse.completeExceptionally(new RuntimeException(errorMessage));
+
+        return fallbackResponse;
+    }
+
 
     @Override
     @Transactional
     @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallbackUpdateOrder")
-    public Response<OrderEntity> update(String orderId, String userId, UpdateOrderRequest request) {
-        Optional<OrderEntity> requestedOrder = orderRepository.findById(orderId);
-
-        if (requestedOrder.isPresent() && requestedOrder.get().getId().equals(orderId)){
-            modelMapper.map(request, requestedOrder.get());
-            OrderEntity savedEntity = orderRepository.save(requestedOrder.get());
-            LOGGER.info("Order has been updated \n" + savedEntity+ "\n");
-            return new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Find order successfully", savedEntity);
-
-        }else{
-            LOGGER.error("Order failed to updated \n" + "Order Not Found" + "\n");
-            return new Response<>(HttpStatus.NOT_FOUND.value(), Boolean.FALSE, "Order Not Found", null);
-        }
+    @TimeLimiter(name = "Order-Service")
+    public CompletableFuture<OrderEntity> update(String orderId, String userId, UpdateOrderRequest request) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Optional<OrderEntity> requestedOrder = orderRepository.findById(orderId);
+                if (requestedOrder.isPresent() && requestedOrder.get().getId().equals(orderId)){
+                    modelMapper.map(request, requestedOrder.get());
+                    OrderEntity savedEntity = orderRepository.save(requestedOrder.get());
+                    LOGGER.info("Order has been updated \n" + savedEntity+ "\n");
+                    return savedEntity;
+                }
+            } catch (Exception ex) {
+                throw new NoSuchElementException(ex.getMessage() + "caused by : " + ex.getCause());
+            }
+            return null;
+        });
     }
 
-
-    public CompletableFuture<Response<OrderEntity>> fallbackOrder(CreateOrderRequest request, Throwable e) {
-        LOGGER.error("Create Order failed: " + e);
-        String errorMessage = "Create Order failed, try again later. Error caused : " + e.getMessage();
-        Response<OrderEntity> fallbackResponse = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, errorMessage, null);
-        return CompletableFuture.completedFuture(fallbackResponse);
-    }
-
-    public Response<OrderEntity> fallbackUpdateOrder(String orderId, String userId, UpdateOrderRequest request, Throwable e) {
-        LOGGER.error("Update Order failed: " + e);
+    public CompletableFuture<OrderEntity> fallbackUpdateOrder(String orderId, String userId, UpdateOrderRequest request, Throwable e) {
+        LOGGER.error("Update Order failed: " + e.getMessage());
         String errorMessage = "Update Order failed, try again later. Error caused : " + e.getMessage();
-        Response<OrderEntity> fallbackResponse = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, errorMessage, null);
+
+        CompletableFuture<OrderEntity> fallbackResponse = new CompletableFuture<>();
+        fallbackResponse.completeExceptionally(new RuntimeException(errorMessage));
+
         return fallbackResponse;
     }
 
-    public Response<List<OrderEntity>> fallbackListOrder(FindOrderRequest request, Throwable e) {
-        LOGGER.error("Find Order failed: " + e);
-        String errorMessage = "Find Order failed, try again later. Error caused : " + e.getMessage();
-        Response<List<OrderEntity>> fallbackResponse = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, errorMessage, null);
-        return fallbackResponse;
-    }
-
-    //    @PutMapping("/update")
-//    @CircuitBreaker(name = "Order-Service", fallbackMethod = "fallback")
-//    @TimeLimiter(name = "Order-Service")
-//    public CompletableFuture<ResponseEntity<Response<Object>>> updateOrder(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request, BindingResult errors) {
-//        CompletableFuture<Object> service = CompletableFuture
-//              .supplyAsync(() -> orderService.update(orderId, userId, request))
-//              .thenApplyAsync(updateEntity -> new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update order successfully", updateEntity));
-//
-//        return service.thenApplyAsync(result -> {
-//            Response<Object> response = new Response<>(HttpStatus.OK.value(), Boolean.TRUE, "Update order successfully", result);
-//            return ResponseEntity.ok().body(response);
-//        });
-//    }
-
-//    public CompletableFuture<ResponseEntity<Response<Object>>> fallback(@RequestParam String orderId, @RequestParam String userId, @RequestBody UpdateOrderRequest request, BindingResult errors, TimeoutException ex) {
-//        // fetch results from the cache
-//        Response<Object> response = new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), Boolean.FALSE,ex.getMessage(),null)
-//        return CompletableFuture.supplyAsync(() -> ResponseEntity.internalServerError().body(response));
-//    }
 }

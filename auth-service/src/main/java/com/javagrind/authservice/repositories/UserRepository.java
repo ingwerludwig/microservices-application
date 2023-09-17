@@ -8,11 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,String> {
     @Query("SELECT user FROM UserEntity user WHERE user.id= :id")
-    UserEntity findUserById(String id);
+    UserEntity findUserById(UUID id);
 
     @Query("SELECT user FROM UserEntity user WHERE user.email= :email AND user.status = true")
     UserEntity findUserByEmail(String email);

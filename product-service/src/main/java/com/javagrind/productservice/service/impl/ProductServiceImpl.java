@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<ProductEntity> requestedProduct = productRepository.findById(id);
 
         if (requestedProduct.isPresent() && requestedProduct.get().getId().equals(id)){
-            Long updated = productDao.updateById(id,request);
+            Long updated = productDao.updateById(id,request,requestedProduct.get());
             if(updated == 1L) {
                 Optional<ProductEntity> updatedProduct = productRepository.findById(id);
                 return updatedProduct.filter(product -> product.getId().equals(id)).orElse(null);
