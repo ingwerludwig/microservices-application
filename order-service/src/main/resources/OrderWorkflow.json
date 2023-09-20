@@ -1,0 +1,211 @@
+{
+  "name": "OrderWorkflow",
+  "version": 1,
+  "correlationId": "order",
+  "description": "Order Processing Workflow",
+  "tasks": [
+    {
+      "name": "Set_global_var",
+      "taskReferenceName": "Set_Global_Var",
+      "type": "SET_VARIABLE",
+      "inputParameters": {
+        "token": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGFkbWluLm9yZyIsImV4cCI6MTY5NTI4MTI0MH0.xsDHnuMV48MAtThaSR6ygFRCNtG_OAtNU58uELYUS0u_qCnz5EVe4jlB03rdyr2fTkqneYSHRi9vP_gqYB2R4g",
+        "url": "192.168.0.137"
+      }
+    },
+    {
+      "name": "GetProduct",
+      "taskReferenceName": "getProduct",
+      "type": "HTTP",
+      "inputParameters": {
+        "http_request": {
+          "method": "POST",
+          "uri": "http://${workflow.variables.url}:8000/api/product/getProductById",
+          "contentType": "application/json",
+          "headers": {
+            "Authorization": "${workflow.variables.token}"
+          },
+          "body": {
+            "productId": "${workflow.input.productId}"
+          },
+          "connectionTimeOut": "3600",
+          "readTimeOut": "3600"
+        }
+      },
+      "outputParameters": {
+        "productName": "${response.body.data.productName}",
+        "productId": "${response.body.data.id}",
+        "price": "${response.body.data.price}"
+      }
+    },
+    {
+      "name": "CreateOrder",
+      "taskReferenceName": "createOrder",
+      "type": "HTTP",
+      "inputParameters": {
+        "http_request": {
+          "method": "POST",
+          "uri": "http://${workflow.variables.url}:8000/api/order/create",
+          "contentType": "application/json",
+          "headers": {
+            "Authorization": "${workflow.variables.token}"
+          },
+          "body": {
+            "productId": "${getProduct.output.response.body.data.id}",
+            "userId": "${workflow.input.userId}",
+            "productName": "${getProduct.output.response.body.data.productName}",
+            "price": "${getProduct.output.response.body.data.price}",
+            "description": "${workflow.input.description}",
+            "amounts": "${workflow.input.amounts}"
+          },
+          "connectionTimeOut": "3600",
+          "readTimeOut": "3600"
+        }
+      },
+      "outputParameters": {
+        "orderId": "${response.body.data.id}",
+        "productId": "${response.body.data.productId}",
+        "amounts": "${response.body.data.amounts}",
+        "price": "${response.body.data.price}"
+      }
+    },
+    {
+      "name": "DecreaseStock",
+      "taskReferenceName": "decreaseStock",
+      "type": "HTTP",
+      "inputParameters": {
+        "http_request": {
+          "method": "PUT",
+          "uri": "http://${workflow.variables.url}:8000/api/product/decreaseStock?id=${workflow.input.productId}",
+          "contentType": "application/json",
+          "headers": {
+            "Authorization": "${workflow.variables.token}"
+          },
+          "body": {
+            "amounts": "${workflow.input.amounts}"
+          },
+          "connectionTimeOut": "3600",
+          "readTimeOut": "3600"
+        }
+      },
+      "outputParameters": {
+        "availableStock": "${response.body.data.statusCode}"
+      }
+    },
+    {
+      "name": "CheckStockSufficiency",
+      "taskReferenceName": "canStockReduced",
+      "inputParameters": {
+        "case_value_stockcheck": "${decreaseStock.output.response.statusCode}"
+      },
+      "type": "DECISION",
+      "caseExpression": "if ($.case_value_stockcheck == 200) 'true'; else 'false';",
+      "decisionCases": {
+        "true": [
+          {
+            "name": "CreatePayment",
+            "taskReferenceName": "createPayment",
+            "type": "HTTP",
+            "inputParameters": {
+              "http_request": {
+                "method": "POST",
+                "uri": "http://${workflow.variables.url}:8000/api/payment/pay",
+                "contentType": "application/json",
+                "headers": {
+                  "Authorization": "${workflow.variables.token}"
+                },
+                "body": {
+                  "transaction_details": {
+                    "order_id": "${createOrder.output.response.body.data.id}",
+                    "gross_amount": "${createOrder.output.response.body.data.price}"
+                  }
+                },
+                "connectionTimeOut": "3600",
+                "readTimeOut": "3600"
+              }
+            },
+            "outputParameters": {
+              "paymentStatus": "${response.body.data.paymentStatus}"
+            },
+            "timeoutPolicy": "TIME_OUT_WF",
+            "timeoutSeconds": 86400
+          },
+          {
+            "name": "HoldForPaymentConfirmation",
+            "taskReferenceName": "holdForPaymentConfirmation",
+            "type": "WAIT",
+            "inputParameters": {
+              "duration": "10s"
+            }
+          },
+          {
+            "name": "GetPaymentStatus",
+            "taskReferenceName": "getPaymentStatus",
+            "type": "HTTP",
+            "inputParameters": {
+              "http_request": {
+                "method": "GET",
+                "uri": "http://${workflow.variables.url}:8000/api/order/getOrderById?orderId=${createOrder.output.response.body.data.id}",
+                "contentType": "application/json",
+                "headers": {
+                  "Authorization": "${workflow.variables.token}"
+                },
+                "connectionTimeOut": "3600",
+                "readTimeOut": "3600"
+              }
+            },
+            "outputParameters": {
+              "paymentStatus": "${response.body.data.paymentStatus}"
+            },
+            "timeoutPolicy": "TIME_OUT_WF",
+            "timeoutSeconds": 86400
+          },
+          {
+            "name": "CheckPaymentStatus",
+            "taskReferenceName": "checkPaymentStatus",
+            "inputParameters": {
+              "case_value_payment": "${getPaymentStatus.output.paymentStatus}"
+            },
+            "type": "DECISION",
+            "caseExpression": "if ($.case_value_payment == 'PAYMENT_SUCCEED') 'PAYMENT_SUCCEED'; else '';",
+            "decisionCases": {
+              "PAYMENT_SUCCEED": [
+                {
+                  "name": "CompleteWorkflow",
+                  "taskReferenceName": "completeWorkflow",
+                  "type": "COMPLETE"
+                }
+              ]
+            },
+            "defaultCase": [
+              {
+                "name": "IncreaseStock",
+                "taskReferenceName": "increaseStock",
+                "type": "HTTP",
+                "inputParameters": {
+                  "http_request": {
+                    "method": "PUT",
+                    "uri": "http://${workflow.variables.url}:8000/api/product/increaseStock?id=${workflow.input.productId}",
+                    "contentType": "application/json",
+                    "headers": {
+                      "Authorization": "${workflow.variables.token}"
+                    },
+                    "body": {
+                      "amounts": "${workflow.input.amounts}"
+                    },
+                    "connectionTimeOut": "3600",
+                    "readTimeOut": "3600"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "outputParameters": {
+    "workflowStatus": "${workflow.status}"
+  },
+  "ownerEmail": "ingwerflash@gmail.com"
+}

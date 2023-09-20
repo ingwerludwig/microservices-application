@@ -1,1 +1,1 @@
-{"image":"registry.hub.docker.com/ingwerludwig/order-service","imageId":"sha256:7005d86c9dc4d0815b78696559dba66ba4a830837a402b400fbf050df7c2e7e4","imageDigest":"sha256:5b430446b06ace5ad217608848dcce025fd0fa647874c5a71cc7614cba9d1503","tags":["latest"],"imagePushed":true}
+{"image":"registry.hub.docker.com/ingwerludwig/order-service","imageId":"sha256:91880d4c5970ee3a54c75f24c25f126899fdf2018a2c2a0300a385ee2805eaea","imageDigest":"sha256:bcbe1f15eb8db774902359c53fcaf3b677dad96fb86108c0a102689c6a558ae9","tags":["latest"],"imagePushed":true}

@@ -32,7 +32,7 @@ public class PaymentServiceImpl implements PaymentService {
     public Mono<Response<PaymentResponse>> pay(MidtransChargeRequest request) throws Exception {
         return midtransServiceClient.charge(request)
                 .flatMap(midtransResponse -> {
-                    PaymentResponse paymentResponse = new PaymentResponse(LocalDateTime.now(), midtransResponse.getPayment_url());
+                    PaymentResponse paymentResponse = new PaymentResponse(LocalDateTime.now(), midtransResponse.getPayment_url(), midtransResponse.getOrder_id());
                     LOGGER.info("Payment response: " + midtransResponse);
                     return Mono.just(new Response<>(HttpStatus.OK.value(), Boolean.FALSE, "Payment Successful", paymentResponse));
                 })

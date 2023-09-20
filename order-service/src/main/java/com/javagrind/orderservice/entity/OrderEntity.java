@@ -30,7 +30,7 @@ public class OrderEntity {
     private String productId;
 
     @Column(name = "user_id", updatable = false)
-    private String user_id;
+    private UUID user_id;
 
     @Column(name = "product_name", updatable = false)
     private String productName;
@@ -55,7 +55,7 @@ public class OrderEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public OrderEntity(String productId, String userId, String productName, String description, Long amounts, Long price) {
+    public OrderEntity(String productId, UUID userId, String productName, String description, Long amounts, Long price) {
         this.productId = productId;
         this.user_id = userId;
         this.productName = productName;

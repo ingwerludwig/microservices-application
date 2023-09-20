@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -39,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 Long totalPrice = request.getPrice() * request.getAmounts();
-                OrderEntity newOrder = new OrderEntity(request.getProductId(), request.getUserId(), request.getProductName(), request.getDescription(), request.getAmounts(), totalPrice);
+                OrderEntity newOrder = new OrderEntity(request.getProductId(), UUID.fromString(request.getUserId()), request.getProductName(), request.getDescription(), request.getAmounts(), totalPrice);
                 orderRepository.save(newOrder);
 
                 CreatedOrderEvent event = modelMapper.map(newOrder, CreatedOrderEvent.class);
@@ -97,8 +98,8 @@ public class OrderServiceImpl implements OrderService {
     public CompletableFuture<OrderEntity> findOrderById(String orderId) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Optional<OrderEntity> requestedOrder = orderRepository.findById(orderId);
-                if (requestedOrder.isPresent() && requestedOrder.get().getId().equals(orderId)){
+                Optional<OrderEntity> requestedOrder = orderRepository.findById(UUID.fromString(orderId));
+                if (requestedOrder.isPresent() && requestedOrder.get().getId().equals(UUID.fromString(orderId))){
                     OrderEntity requestedEntity = requestedOrder.get();
                     LOGGER.info("Order has been found \n" + requestedEntity+ "\n");
                     return requestedEntity;
