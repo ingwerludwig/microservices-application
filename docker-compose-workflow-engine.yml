@@ -1,12 +1,13 @@
-version: '3'
+version: '2.3.3'
 name: netflix-conductor-workflow-engine
 networks:
     microservice-core-service_default:
         external: true
 services:
   conductor-server:
+    container_name: conductor-server
     environment:
-      - CONFIG_PROP=config-local.properties
+      - CONFIG_PROP=config-redis.properties
     image: ingwerludwig/conductor-server:latest
     expose:
       - 8080
@@ -15,14 +16,18 @@ services:
     networks:
       - microservice-core-service_default
     healthcheck:
-      test: ["CMD", "curl","-I" ,"-XGET", "http://localhost:8080/health"]
-      interval: 60s
+      test: ["CMD", "curl","-I" ,"-XGET", "http://localhost:8080/swagger-ui/index.html"]
+      interval: 5s
       timeout: 30s
-      retries: 12
+      retries: 50
     links:
-      - elasticsearch:es
+      - conductor-elasticsearch:es
+      - conductor-redis:rs
     depends_on:
-      - elasticsearch
+      conductor-elasticsearch:
+        condition: service_healthy
+      conductor-redis:
+        condition: service_healthy
     logging:
       driver: "json-file"
       options:
@@ -30,6 +35,7 @@ services:
         max-file: "3"
 
   conductor-ui:
+    container_name: conductor-ui
     environment:
       - WF_SERVER=http://conductor-server:8080/api/
     image: ingwerludwig/conductor-ui:latest
@@ -39,9 +45,13 @@ services:
       - microservice-core-service_default
     links:
       - conductor-server
+    depends_on:
+      conductor-server:
+        condition: service_healthy
     stdin_open: true
 
-  elasticsearch:
+  conductor-elasticsearch:
+    container_name: conductor-elasticsearch
     image: webhippie/elasticsearch:6.8
     environment:
       - ELASTICSEARCH_XPACK_SECURITY_ENABLED=false
@@ -54,6 +64,13 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    healthcheck:
+      test: >
+        timeout 5 bash -c 'cat < /dev/null > /dev/tcp/localhost/9200' &&
+        timeout 5 bash -c 'cat < /dev/null > /dev/tcp/localhost/9300'
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - microservice-core-service_default
     logging:
@@ -61,6 +78,18 @@ services:
       options:
         max-size: "1k"
         max-file: "3"
+
+  conductor-redis:
+    container_name: conductor-redis
+    image: redis:6.2.3-alpine
+    volumes:
+      - ../server/config/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - 7379:6379
+    networks:
+      - microservice-core-service_default
+    healthcheck:
+      test: [ "CMD", "redis-cli","ping" ]
 
 volumes:
   esdata-conductor:

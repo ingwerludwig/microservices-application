@@ -2,25 +2,23 @@ package com.javagrind.orderservice.dto.request;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
-@Validated
 @RequiredArgsConstructor
 public class OrderWorkflowRequest {
-
-    @NotEmpty(message = "productId cannot be empty")
-    private String productId;
-
-    @NotEmpty(message = "userId cannot be empty")
-    private String userId;
-
-    private String description;
-
-    @Min(value = 1, message = "amounts must be greater than 0")
-    private Long amounts;
+    private Map<String, Object> jsonData = new HashMap<>();
+    public OrderWorkflowRequest(OrderWorkflowDTO request, String token, String baseUrl){
+        this.jsonData.put("productId", request.getProductId());
+        this.jsonData.put("userId", request.getUserId());
+        this.jsonData.put("description", request.getDescription());
+        this.jsonData.put("amounts", request.getAmounts());
+        this.jsonData.put("token", token);
+        this.jsonData.put("baseUrl",baseUrl);
+    }
+    public Map<String, Object> getJsonData(){
+        return getJsonData();
+    }
 }
