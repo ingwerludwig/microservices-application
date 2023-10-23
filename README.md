@@ -46,6 +46,7 @@ Minimum RAM required for running All docker container is 5GB
 2. Pull all required image
    ```sh
    docker pull webhippie/elasticsearch:6.8
+   docker pull redis:6.2.3-alpine
    docker pull ingwerludwig/conductor-server:latest
    docker pull ingwerludwig/conductor-ui:latest
    docker pull confluentinc/cp-kafka
@@ -91,7 +92,8 @@ Minimum RAM required for running All docker container is 5GB
    :9092 for Apache Kafka Confluent<br>
    :5434 for PostgreSQL OrderDB<br>
    :5433 for PostgreSQL AuthDB<br>
-   :6379 for Redis<br>
+   :6379 for Redis Authentication Service<br>
+   :7379 for Redis Netflix Conductor Server<br>
    :9200 and :9300 for Elasticsearch<br>
 
    <a id="service"></a>
