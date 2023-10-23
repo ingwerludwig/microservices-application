@@ -105,6 +105,8 @@ Minimum RAM required for running All docker container is 5GB
    ```
    ### Notes : 
    Will taking long in order to wait core services and api gateway (spring boot based) launched completely (around 10-12 mins) to make every service ready and registered in Netflix Eureka Discovery Server and Spring Cloud Gateway <br>
+   
+   ## Please Check the terminal's container when starting because 15 docker container will be burdening your system! <br>
 
    <a id="ui"></a>
    ### UI Port <br>
@@ -118,7 +120,8 @@ Minimum RAM required for running All docker container is 5GB
    :9092 for Apache Kafka Confluent<br>
    :5434 for PostgreSQL OrderDB<br>
    :5433 for PostgreSQL AuthDB<br>
-   :6379 for Redis<br>
+   :6379 for Redis Authentication Service<br>
+   :7379 for Redis Netflix Conductor Server<br>
    :9200 and :9300 for Elasticsearch<br>
 
    <a id="service"></a>

@@ -28,8 +28,8 @@
           "body": {
             "productId": "${workflow.input.productId}"
           },
-          "connectionTimeOut": "3600",
-          "readTimeOut": "3600"
+          "connectionTimeOut": "36000",
+          "readTimeOut": "36000"
         }
       },
       "outputParameters": {
@@ -58,8 +58,8 @@
             "description": "${workflow.input.description}",
             "amounts": "${workflow.input.amounts}"
           },
-          "connectionTimeOut": "3600",
-          "readTimeOut": "3600"
+          "connectionTimeOut": "36000",
+          "readTimeOut": "36000"
         }
       },
       "outputParameters": {
@@ -84,8 +84,8 @@
           "body": {
             "amounts": "${workflow.input.amounts}"
           },
-          "connectionTimeOut": "3600",
-          "readTimeOut": "3600"
+          "connectionTimeOut": "36000",
+          "readTimeOut": "36000"
         }
       },
       "outputParameters": {
@@ -120,8 +120,8 @@
                     "gross_amount": "${createOrder.output.response.body.data.price}"
                   }
                 },
-                "connectionTimeOut": "3600",
-                "readTimeOut": "3600"
+                "connectionTimeOut": "36000",
+                "readTimeOut": "36000"
               }
             },
             "outputParameters": {
@@ -150,8 +150,8 @@
                 "headers": {
                   "Authorization": "${workflow.variables.token}"
                 },
-                "connectionTimeOut": "3600",
-                "readTimeOut": "3600"
+                "connectionTimeOut": "36000",
+                "readTimeOut": "36000"
               }
             },
             "outputParameters": {
@@ -193,8 +193,8 @@
                     "body": {
                       "amounts": "${workflow.input.amounts}"
                     },
-                    "connectionTimeOut": "3600",
-                    "readTimeOut": "3600"
+                    "connectionTimeOut": "36000",
+                    "readTimeOut": "36000"
                   }
                 }
               }
