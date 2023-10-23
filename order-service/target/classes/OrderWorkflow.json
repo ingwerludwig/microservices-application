@@ -9,8 +9,8 @@
       "taskReferenceName": "Set_Global_Var",
       "type": "SET_VARIABLE",
       "inputParameters": {
-        "token": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGFkbWluLm9yZyIsImV4cCI6MTY5NTI4MTI0MH0.xsDHnuMV48MAtThaSR6ygFRCNtG_OAtNU58uELYUS0u_qCnz5EVe4jlB03rdyr2fTkqneYSHRi9vP_gqYB2R4g",
-        "url": "192.168.0.137"
+        "token": "Bearer ${workflow.input.token}",
+        "baseUrl": "${workflow.input.baseUrl}"
       }
     },
     {
@@ -20,7 +20,7 @@
       "inputParameters": {
         "http_request": {
           "method": "POST",
-          "uri": "http://${workflow.variables.url}:8000/api/product/getProductById",
+          "uri": "http://${workflow.variables.baseUrl}/product/getProductById",
           "contentType": "application/json",
           "headers": {
             "Authorization": "${workflow.variables.token}"
@@ -45,7 +45,7 @@
       "inputParameters": {
         "http_request": {
           "method": "POST",
-          "uri": "http://${workflow.variables.url}:8000/api/order/create",
+          "uri": "http://${workflow.variables.baseUrl}/order/create",
           "contentType": "application/json",
           "headers": {
             "Authorization": "${workflow.variables.token}"
@@ -76,7 +76,7 @@
       "inputParameters": {
         "http_request": {
           "method": "PUT",
-          "uri": "http://${workflow.variables.url}:8000/api/product/decreaseStock?id=${workflow.input.productId}",
+          "uri": "http://${workflow.variables.baseUrl}/product/decreaseStock?id=${workflow.input.productId}",
           "contentType": "application/json",
           "headers": {
             "Authorization": "${workflow.variables.token}"
@@ -109,7 +109,7 @@
             "inputParameters": {
               "http_request": {
                 "method": "POST",
-                "uri": "http://${workflow.variables.url}:8000/api/payment/pay",
+                "uri": "http://${workflow.variables.baseUrl}/payment/pay",
                 "contentType": "application/json",
                 "headers": {
                   "Authorization": "${workflow.variables.token}"
@@ -145,7 +145,7 @@
             "inputParameters": {
               "http_request": {
                 "method": "GET",
-                "uri": "http://${workflow.variables.url}:8000/api/order/getOrderById?orderId=${createOrder.output.response.body.data.id}",
+                "uri": "http://${workflow.variables.baseUrl}/order/getOrderById?orderId=${createOrder.output.response.body.data.id}",
                 "contentType": "application/json",
                 "headers": {
                   "Authorization": "${workflow.variables.token}"
@@ -185,7 +185,7 @@
                 "inputParameters": {
                   "http_request": {
                     "method": "PUT",
-                    "uri": "http://${workflow.variables.url}:8000/api/product/increaseStock?id=${workflow.input.productId}",
+                    "uri": "http://${workflow.variables.baseUrl}/product/increaseStock?id=${workflow.input.productId}",
                     "contentType": "application/json",
                     "headers": {
                       "Authorization": "${workflow.variables.token}"

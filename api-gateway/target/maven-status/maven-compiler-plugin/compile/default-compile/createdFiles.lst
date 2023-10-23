@@ -1,9 +1,9 @@
-com/javagrind/apigateway/controller/BaseController.class
 com/javagrind/apigateway/filter/JwtAuthGatewayFilter$1.class
 com/javagrind/apigateway/config/WebClientConfig.class
+com/javagrind/apigateway/filter/JwtAuthGatewayFilter.class
+com/javagrind/apigateway/controller/BaseController.class
 com/javagrind/apigateway/filter/JwtAuthGatewayFilter$Config.class
 com/javagrind/apigateway/dto/Response.class
 com/javagrind/apigateway/handler/WebClientCallExceptionHandler.class
 com/javagrind/apigateway/filter/RouteFilter.class
 com/javagrind/apigateway/APIGatewayApplication.class
-com/javagrind/apigateway/filter/JwtAuthGatewayFilter.class

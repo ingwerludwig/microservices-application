@@ -8,16 +8,14 @@ import java.util.Map;
 @Data
 @RequiredArgsConstructor
 public class StartOrderWorkflowRequest {
-    private StartWorkflowRequest workflowRequest;
+    private StartWorkflowRequest workflowRequest=new StartWorkflowRequest();
 
-    public StartOrderWorkflowRequest(Map<String, Object> jsonData){
+    public StartWorkflowRequest getWorkflowRequest(Map<String, Object> jsonData){
         this.workflowRequest.setName("OrderWorkflow");
         this.workflowRequest.setCorrelationId("order");
         this.workflowRequest.setVersion(1);
         this.workflowRequest.setInput(jsonData);
+        return workflowRequest;
     }
 
-    public StartWorkflowRequest getWorkflowRequest() {
-        return getWorkflowRequest();
-    }
 }

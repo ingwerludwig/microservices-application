@@ -6,6 +6,7 @@ import com.javagrind.paymentservice.dto.Request.MidtransPaymentRequest.MidtransC
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -20,17 +21,21 @@ import java.util.Base64;
 public class MidtransServiceClientImpl {
     private static final Logger LOGGER = LogManager.getLogger(MidtransServiceClientImpl.class);
 
+    @Value("${midtrans.server.key}")
+    private String server_key;
+
+    @Value("${midtrans.payment.uri}")
+    private String paymentUri;
+
     public Mono<MidtransResponse> charge(MidtransChargeRequest request) throws Exception {
-        String requestedUri = "https://api.sandbox.midtrans.com/v1/payment-links";
-        String username = "SB-Mid-server-MBwpRLA628fwii77HUanuvlL";
         String password = null;
-        String credentials = username + ":" + password;
+        String credentials = server_key + ":" + password;
         String encodedCredentials = Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
         String authHeaderValue = "Basic " + encodedCredentials;
 
         try {
             return WebClient.builder()
-                    .baseUrl(requestedUri)
+                    .baseUrl(paymentUri)
                     .defaultHeader(HttpHeaders.AUTHORIZATION, authHeaderValue)
                     .build()
                     .post()

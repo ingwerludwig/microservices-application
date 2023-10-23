@@ -10,15 +10,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OrderWorkflowRequest {
     private Map<String, Object> jsonData = new HashMap<>();
-    public OrderWorkflowRequest(OrderWorkflowDTO request, String token, String baseUrl){
+    public Map<String, Object> getJsonData(OrderWorkflowDTO request, String token, String baseUrl){
         this.jsonData.put("productId", request.getProductId());
         this.jsonData.put("userId", request.getUserId());
         this.jsonData.put("description", request.getDescription());
         this.jsonData.put("amounts", request.getAmounts());
         this.jsonData.put("token", token);
         this.jsonData.put("baseUrl",baseUrl);
-    }
-    public Map<String, Object> getJsonData(){
-        return getJsonData();
+        return jsonData;
     }
 }

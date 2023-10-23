@@ -72,6 +72,7 @@ Minimum RAM required for running All docker container is 5GB
 ### <br> 8. Pull all required image
    ```sh
    docker pull webhippie/elasticsearch:6.8
+   docker pull redis:6.2.3-alpine
    docker pull ingwerludwig/conductor-server:latest
    docker pull ingwerludwig/conductor-ui:latest
    docker pull confluentinc/cp-kafka

@@ -1,5 +1,8 @@
 version: '2.3.3'
 name: microservice-core-service
+networks:
+  microservice-core-service_default:
+    external: true
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper
@@ -8,31 +11,38 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
     healthcheck:
       test: nc -z localhost 2181 || exit -1
-      interval: 10s
+      interval: 5s
       timeout: 5s
-      retries: 3
+      retries: 10
     ports:
       - "2181:2181"
+    networks:
+      - microservice-core-service_default
 
   kafka:
     image: confluentinc/cp-kafka
     container_name: kafka
     environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     depends_on:
       zookeeper:
         condition: service_healthy
+    networks:
+      - microservice-core-service_default
     expose:
       - "9092"
     ports:
       - "9092:9092"
 
-  redis:
+  auth-redis:
     image: redis
-    container_name: redis
+    container_name: auth-redis
     ports:
       - "6379:6379"
+    networks:
+      - microservice-core-service_default
     healthcheck:
       test: [ "CMD", "redis-cli","ping" ]
 
@@ -48,6 +58,8 @@ services:
       - "5433"
     ports:
       - "5433:5432"
+    networks:
+      - microservice-core-service_default
     restart: always
 
   order-db:
@@ -62,6 +74,8 @@ services:
       - "5434"
     ports:
       - "5434:5432"
+    networks:
+      - microservice-core-service_default
     restart: always
 
   discovery-server:
@@ -71,6 +85,8 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
       - "8167:8167"
+    networks:
+      - microservice-core-service_default
 
   api-gateway:
     image: ingwerludwig/api-gateway:latest
@@ -80,6 +96,8 @@ services:
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
     ports:
       - "8000:8000"
+    networks:
+      - microservice-core-service_default
     depends_on:
       - discovery-server
 
@@ -92,9 +110,11 @@ services:
       - "8081:8081"
     expose:
       - "8081"
+    networks:
+      - microservice-core-service_default
     depends_on:
       - auth-db
-      - redis
+      - auth-redis
       - discovery-server
       - api-gateway
 
@@ -103,6 +123,8 @@ services:
     container_name: product-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - microservice-core-service_default
     ports:
       - "8082:8082"
     expose:
@@ -117,6 +139,8 @@ services:
     container_name: order-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - microservice-core-service_default
     ports:
       - "8083:8083"
     expose:
@@ -133,6 +157,8 @@ services:
     container_name: payment-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - microservice-core-service_default
     ports:
       - "8084:8084"
     expose:

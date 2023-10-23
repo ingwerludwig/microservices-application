@@ -1,1 +1,1 @@
-{"image":"registry.hub.docker.com/ingwerludwig/payment-service","imageId":"sha256:2000c66d0ec2353d7bbf96fe14a2b4142025233f4beea0eea06011cc5583eed1","imageDigest":"sha256:d512589f43ed1f3470f802916ae3b82d347c511411d3499d036d88abdd16eeda","tags":["latest"],"imagePushed":true}
+{"image":"registry.hub.docker.com/ingwerludwig/payment-service","imageId":"sha256:c5f52638915ea7cc77951e019495922da3152a6f69dc91dd8eb28a50591f2879","imageDigest":"sha256:39b8c664ad2279b173c6b75a6e81f85ffdfcb6dc40a905ce595657c34ae20a87","tags":["latest"],"imagePushed":true}

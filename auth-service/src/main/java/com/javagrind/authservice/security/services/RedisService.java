@@ -14,10 +14,9 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class RedisService {
     private final JwtUtils jwtUtils;
-    @Value("{redis.host")
-    private String redisHost;
 
-    private final Integer redisPort=6379;
+    private String redisHost="auth-redis";
+    private Integer redisPort=6379;
     JedisPool jedisPool = new JedisPool(redisHost, redisPort);
 
     public void store(String token){

@@ -1,5 +1,7 @@
 com/javagrind/orderservice/dto/request/UpdateOrderRequest.class
+com/javagrind/orderservice/dto/request/StartOrderWorkflowRequest.class
 com/javagrind/orderservice/dto/Response.class
+com/javagrind/orderservice/dto/request/OrderWorkflowDTO.class
 com/javagrind/orderservice/handler/WebClientCallExceptionHandler.class
 com/javagrind/orderservice/services/OrderService.class
 com/javagrind/orderservice/config/KafkaConfig.class
