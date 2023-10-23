@@ -61,7 +61,9 @@ Minimum RAM required for running All docker container is 5GB
    ```
 ### <br> 5. Refresh dependencies
    Right Click project directory -> Maven -> Reload Project
-### <br> 6. Setup your env in application.properties
+### <br> 6. Setup your env as well as application.properties <br> 
+   (Change name .env.dev to .env and .env.prod to prod.env)
+### <br> (ENV ISSUE!) <br><br>6.1 Change the Redis host to localhost in RedisService.java if you want to run this program locally
 ### <br> 7. Start SpringBoot Application Sequentially
    - Discovery-Server
    - APIGateway
